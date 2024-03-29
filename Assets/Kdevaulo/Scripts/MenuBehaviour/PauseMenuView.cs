@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Kdevaulo.SpaceInvaders.Menu
+namespace Kdevaulo.SpaceInvaders.MenuBehaviour
 {
-    [AddComponentMenu(nameof(PauseMenuView) + " in " + nameof(Menu))]
+    [AddComponentMenu(nameof(PauseMenuView) + " in " + nameof(MenuBehaviour))]
     public sealed class PauseMenuView : MonoBehaviour
     {
-        [SerializeField] private Button _restartButton;
-        [SerializeField] private Button _continueButton;
+        [field: Header("References")]
+        [field: SerializeField] public Button RestartButton { get; private set; }
+        [field: SerializeField] public Button ContinueButton { get; private set; }
     }
 }
