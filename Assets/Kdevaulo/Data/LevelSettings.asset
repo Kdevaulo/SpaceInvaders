@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0035bdb8166b4063a93d9a5e093931f6, type: 3}
+  m_Name: LevelSettings
+  m_EditorClassIdentifier: 
+  <EnemiesStartSpeed>k__BackingField: 0.001
+  <EnemiesSpeedStep>k__BackingField: 0.001
+  <EnemiesSettings>k__BackingField:
+  - Name: 0
+    View: {fileID: 5522217602194945571, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+    DropType: 0
+    Count: 7
+    RewardPoints: 10
+    VulnerableProjectileLayer: 6
+  - Name: 1
+    View: {fileID: 5522217602194945571, guid: 323334fbdb77622479318849892a6387, type: 3}
+    DropType: 1
+    Count: 7
+    RewardPoints: 20
+    VulnerableProjectileLayer: 6
+  - Name: 2
+    View: {fileID: 5522217602194945571, guid: 4f0c1ba05f1711649a210278aab29c6f, type: 3}
+    DropType: 2
+    Count: 7
+    RewardPoints: 10
+    VulnerableProjectileLayer: 6
+  - Name: 3
+    View: {fileID: 5522217602194945571, guid: 4b5afc88efe6daf439e5a0bf61b81123, type: 3}
+    DropType: 0
+    Count: 7
+    RewardPoints: 30
+    VulnerableProjectileLayer: 6
+  - Name: 4
+    View: {fileID: 5522217602194945571, guid: ec81230f599dab14797add022b181182, type: 3}
+    DropType: 1
+    Count: 7
+    RewardPoints: 20
+    VulnerableProjectileLayer: 6
+  - Name: 5
+    View: {fileID: 5522217602194945571, guid: 93fac9c0b0cce40438d4b1c8a2b9a56d, type: 3}
+    DropType: 2
+    Count: 7
+    RewardPoints: 10
+    VulnerableProjectileLayer: 6
+  - Name: 6
+    View: {fileID: 5522217602194945571, guid: 89094f8e4a851aa428d3b46626d0af8a, type: 3}
+    DropType: 0
+    Count: 7
+    RewardPoints: 10
+    VulnerableProjectileLayer: 6
