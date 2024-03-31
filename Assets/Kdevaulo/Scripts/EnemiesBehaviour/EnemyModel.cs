@@ -24,6 +24,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         public readonly int VulnerableBulletLayer;
 
         private readonly float HalfHorizontalSize;
+        private readonly float HalfVerticalSize;
 
         private Vector2 _position;
 
@@ -34,12 +35,20 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             Name = settings.Name;
             RewardPoints = settings.RewardPoints;
             VulnerableBulletLayer = settings.VulnerableProjectileLayer;
-            HalfHorizontalSize = view.Collider.bounds.size.x / 2;
+
+            var bounds = view.Collider.bounds;
+            HalfHorizontalSize = bounds.size.x / 2;
+            HalfVerticalSize = bounds.size.y / 2;
         }
 
-        public bool IsOutOfBounds(Vector2 boundsX)
+        public bool IsOutOfBoundsHorizontal(Vector2 boundsX)
         {
             return Position.x - HalfHorizontalSize < boundsX.x || Position.x + HalfHorizontalSize > boundsX.y;
+        }
+
+        public bool IsOutOfBoundsVertical(Vector2 boundsY)
+        {
+            return Position.y - HalfVerticalSize < boundsY.x || Position.y + HalfVerticalSize > boundsY.y;
         }
     }
 }

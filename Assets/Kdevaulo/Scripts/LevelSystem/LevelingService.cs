@@ -26,17 +26,20 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         public void Restart()
         {
+            // todo: clear previous stage
             InitializeLevel(_currentLevel);
         }
 
         public void StartFromTheBeginning()
         {
+            // todo: clear previous stage
             _currentLevel = 0;
             InitializeLevel(_currentLevel);
         }
 
         public void StartNewStage()
         {
+            // todo: clear previous stage
             ++_currentLevel;
             InitializeLevel(_currentLevel);
         }

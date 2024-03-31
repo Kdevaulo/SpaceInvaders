@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnemiesStartSpeed>k__BackingField: 0.001
   <EnemiesSpeedStep>k__BackingField: 0.001
+  <VerticalStep>k__BackingField: -1
   <EnemiesSettings>k__BackingField:
   - Name: 0
     View: {fileID: 5522217602194945571, guid: 7c7084cefb209994693f36795374dbb9, type: 3}

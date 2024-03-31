@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Kdevaulo.Interfaces;
+using Kdevaulo.SpaceInvaders.LevelSystem;
 
 using UniRx;
 using UniRx.Triggers;
@@ -20,6 +21,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private Rect _canvasRect;
         [Inject]
         private CanvasScaler _canvasScaler;
+        [Inject]
+        private LevelingService _levelingService;
 
         private List<EnemyModel> _enemies;
 
@@ -94,13 +97,21 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         {
             float ppu = _canvasScaler.referencePixelsPerUnit;
             var boundsX = new Vector2(_canvasRect.xMin / ppu, _canvasRect.xMax / ppu);
+            var boundsY = new Vector2(_canvasRect.yMin / ppu, _canvasRect.yMax / ppu);
 
-            bool switchDirection = _enemies.Any(enemy => enemy.IsOutOfBounds(boundsX));
+            bool switchDirection = _enemies.Any(enemy => enemy.IsOutOfBoundsHorizontal(boundsX));
 
             if (switchDirection)
             {
                 MoveVertical();
                 _isLeftDirection = !_isLeftDirection;
+            }
+            
+            bool outOfBounds = _enemies.Any(enemy => enemy.IsOutOfBoundsVertical(boundsY));
+
+            if (outOfBounds)
+            {
+                _levelingService.Restart();
             }
         }
 
