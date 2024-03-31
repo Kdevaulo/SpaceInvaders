@@ -30,12 +30,14 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private float _currentSpeed;
         private float _speedStep;
+        private float _verticalStep;
 
-        public void Initialize(List<EnemyModel> enemies, float startSpeed, float speedStep)
+        public void Initialize(List<EnemyModel> enemies, float startSpeed, float speedStep, float verticalStep)
         {
             _enemies = enemies;
             _currentSpeed = startSpeed;
             _speedStep = speedStep;
+            _verticalStep = verticalStep;
 
             foreach (var enemy in _enemies)
             {
@@ -65,11 +67,23 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 return;
             }
 
-            Move();
+            MoveHorizontal();
             HandleScreenCollisions();
         }
 
-        private void Move()
+        // todo: call Dispose at destroy
+        void IDisposable.Dispose()
+        {
+            _disposable.Dispose();
+        }
+
+        private void HandleKilledEvent(EnemyModel model)
+        {
+            _currentSpeed += _speedStep;
+            Debug.Log(model.Name + " killed");
+        }
+
+        private void MoveHorizontal()
         {
             var offset = _isLeftDirection ? Vector2.left : Vector2.right;
 
@@ -85,14 +99,14 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
             if (switchDirection)
             {
+                MoveVertical();
                 _isLeftDirection = !_isLeftDirection;
             }
         }
 
-        private void HandleKilledEvent(EnemyModel model)
+        private void MoveVertical()
         {
-            _currentSpeed += _speedStep;
-            Debug.Log(model.Name + " killed");
+            DoWithEach(enemy => enemy.Position += new Vector2(0, _verticalStep));
         }
 
         private void DoWithEach(Action<EnemyModel> action)
@@ -101,12 +115,6 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             {
                 action.Invoke(enemy);
             }
-        }
-
-        // todo: call Dispose at destroy
-        void IDisposable.Dispose()
-        {
-            _disposable.Dispose();
         }
     }
 }

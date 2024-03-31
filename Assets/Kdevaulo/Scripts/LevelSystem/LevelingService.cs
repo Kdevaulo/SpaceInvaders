@@ -63,7 +63,8 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
             PlaceEnemies(enemies);
 
             //todo: fix behaviour, remove peer-to-peer reference
-            _enemiesController.Initialize(enemies, currentSettings.EnemiesStartSpeed, currentSettings.EnemiesSpeedStep);
+            _enemiesController.Initialize(enemies, currentSettings.EnemiesStartSpeed, currentSettings.EnemiesSpeedStep,
+                currentSettings.VerticalStep);
         }
 
         private void PlaceEnemies(List<EnemyModel> enemies)

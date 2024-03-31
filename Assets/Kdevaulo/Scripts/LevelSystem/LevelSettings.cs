@@ -10,6 +10,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         [field: Header("Values")]
         [field: SerializeField] public float EnemiesStartSpeed { get; private set; }
         [field: SerializeField] public float EnemiesSpeedStep { get; private set; }
+        [field: SerializeField] public float VerticalStep { get; private set; }
 
         [field: Header("References")]
         [field: SerializeField] public EnemySettings[] EnemiesSettings { get; private set; }
