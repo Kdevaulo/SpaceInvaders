@@ -1,4 +1,4 @@
-﻿namespace Kdevaulo.Interfaces
+﻿namespace Kdevaulo.SpaceInvaders
 {
     public interface IPauseHandler
     {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Kdevaulo.Interfaces;
 using Kdevaulo.SpaceInvaders.MenuBehaviour;
 
 using Zenject;

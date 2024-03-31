@@ -13,6 +13,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
     {
         [Inject]
         private LevelingService _levelingService;
+
         [Inject]
         private PauseService _pauseService;
 

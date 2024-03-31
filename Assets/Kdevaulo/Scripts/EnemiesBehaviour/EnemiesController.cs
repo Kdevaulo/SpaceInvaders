@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Kdevaulo.Interfaces;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 
 using UniRx;
@@ -21,8 +20,10 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
     {
         [Inject]
         private Rect _canvasRect;
+
         [Inject]
         private CanvasScaler _canvasScaler;
+
         [Inject]
         private LevelingService _levelingService;
 
@@ -55,6 +56,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                     .AddTo(_disposable);
             }
 
+            _isLeftDirection = false;
             _initialized = true;
         }
 
