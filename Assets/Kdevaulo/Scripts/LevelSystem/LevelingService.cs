@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
 
@@ -26,22 +27,28 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         public void Restart()
         {
-            // todo: clear previous stage
+            ClearLevel();
             InitializeLevel(_currentLevel);
         }
 
         public void StartFromTheBeginning()
         {
-            // todo: clear previous stage
+            ClearLevel();
             _currentLevel = 0;
             InitializeLevel(_currentLevel);
         }
 
         public void StartNewStage()
         {
-            // todo: clear previous stage
+            ClearLevel();
             ++_currentLevel;
             InitializeLevel(_currentLevel);
+        }
+
+        public void ClearLevel()
+        {
+            var disposable = _enemiesController as IDisposable;
+            disposable.Dispose();
         }
 
         private void InitializeLevel(int levelIndex)

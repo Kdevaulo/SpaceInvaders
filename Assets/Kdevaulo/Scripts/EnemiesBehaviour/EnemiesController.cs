@@ -13,6 +13,8 @@ using UnityEngine.UI;
 
 using Zenject;
 
+using Object = UnityEngine.Object;
+
 namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
     public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable
@@ -30,6 +32,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private bool _isLeftDirection;
         private bool _isPaused;
+        private bool _initialized;
 
         private float _currentSpeed;
         private float _speedStep;
@@ -51,6 +54,24 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                     .Subscribe(_ => HandleKilledEvent(enemy))
                     .AddTo(_disposable);
             }
+
+            _initialized = true;
+        }
+
+        void IDisposable.Dispose()
+        {
+            if (_enemies != null)
+            {
+                foreach (var enemy in _enemies.Where(enemy => enemy.View))
+                {
+                    Object.Destroy(enemy.View.gameObject);
+                }
+
+                _enemies.Clear();
+            }
+
+            _disposable.Dispose();
+            _initialized = false;
         }
 
         void IPauseHandler.HandlePause()
@@ -65,19 +86,13 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         void ITickable.Tick()
         {
-            if (_isPaused)
+            if (_isPaused || !_initialized)
             {
                 return;
             }
 
             MoveHorizontal();
             HandleScreenCollisions();
-        }
-
-        // todo: call Dispose at destroy
-        void IDisposable.Dispose()
-        {
-            _disposable.Dispose();
         }
 
         private void HandleKilledEvent(EnemyModel model)
@@ -106,7 +121,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 MoveVertical();
                 _isLeftDirection = !_isLeftDirection;
             }
-            
+
             bool outOfBounds = _enemies.Any(enemy => enemy.IsOutOfBoundsVertical(boundsY));
 
             if (outOfBounds)

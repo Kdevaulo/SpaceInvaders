@@ -21,6 +21,11 @@ namespace Kdevaulo.SpaceInvaders.PauseBehaviour
             pauseMenu.ContinueButton.OnClickAsObservable().Subscribe(_ => Resume()).AddTo(_disposable);
         }
 
+        void IDisposable.Dispose()
+        {
+            _disposable.Dispose();
+        }
+
         private void Pause()
         {
             _pauseService.Pause();
@@ -29,12 +34,6 @@ namespace Kdevaulo.SpaceInvaders.PauseBehaviour
         private void Resume()
         {
             _pauseService.Resume();
-        }
-
-        // todo: call Dispose at destroy
-        void IDisposable.Dispose()
-        {
-            _disposable.Dispose();
         }
     }
 }

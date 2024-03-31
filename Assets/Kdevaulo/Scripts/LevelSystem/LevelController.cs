@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Kdevaulo.SpaceInvaders.MenuBehaviour;
+using Kdevaulo.SpaceInvaders.PauseBehaviour;
 
 using UniRx;
 
@@ -12,17 +13,14 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
     {
         [Inject]
         private LevelingService _levelingService;
+        [Inject]
+        private PauseService _pauseService;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
         public LevelController(PauseMenuView pauseMenu)
         {
             pauseMenu.RestartButton.OnClickAsObservable().Subscribe(_ => Restart()).AddTo(_disposable);
-        }
-
-        public void StartNextLevel()
-        {
-            _levelingService.StartNewStage();
         }
 
         void IInitializable.Initialize()
@@ -33,6 +31,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         private void Restart()
         {
             _levelingService.Restart();
+            _pauseService.Resume();
         }
 
         private void StartFromTheBeginning()
@@ -40,7 +39,6 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
             _levelingService.StartFromTheBeginning();
         }
 
-        //todo: dispose on destroy
         void IDisposable.Dispose()
         {
             _disposable.Dispose();

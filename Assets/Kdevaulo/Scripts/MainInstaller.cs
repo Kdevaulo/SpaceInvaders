@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 using Zenject;
 
+using DisposableManager = Kdevaulo.SpaceInvaders.DisposableBehaviour.DisposableManager;
+
 namespace Kdevaulo.SpaceInvaders
 {
     [AddComponentMenu(nameof(MainInstaller) + " in " + nameof(SpaceInvaders))]
@@ -25,6 +27,13 @@ namespace Kdevaulo.SpaceInvaders
         [SerializeField] private PositionsProvider _positionsProvider;
 
         [SerializeField] private LevelSettings _levelSettings;
+
+        [SerializeField] private DisposableManager _disposableManager;
+
+        private void OnDestroy()
+        {
+            _disposableManager.DisposeAll();
+        }
 
         public override void InstallBindings()
         {

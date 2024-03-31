@@ -9,5 +9,12 @@ namespace Kdevaulo.SpaceInvaders.MenuBehaviour
         [field: Header("References")]
         [field: SerializeField] public Button RestartButton { get; private set; }
         [field: SerializeField] public Button ContinueButton { get; private set; }
+
+        [SerializeField] private GameObject _container;
+
+        public void SetActive(bool state)
+        {
+            _container.SetActive(state);
+        }
     }
 }

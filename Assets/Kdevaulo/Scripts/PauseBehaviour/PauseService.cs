@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
 
 using Kdevaulo.Interfaces;
+using Kdevaulo.SpaceInvaders.MenuBehaviour;
 
-using UnityEngine;
+using Zenject;
 
 namespace Kdevaulo.SpaceInvaders.PauseBehaviour
 {
     public sealed class PauseService
     {
+        [Inject]
         private List<IPauseHandler> _pauseHandlers = new List<IPauseHandler>();
+
+        [Inject]
+        private PauseMenuView _pauseMenuView;
 
         public void Pause()
         {
@@ -16,6 +21,8 @@ namespace Kdevaulo.SpaceInvaders.PauseBehaviour
             {
                 handler.HandlePause();
             }
+
+            _pauseMenuView.SetActive(true);
         }
 
         public void Resume()
@@ -24,24 +31,8 @@ namespace Kdevaulo.SpaceInvaders.PauseBehaviour
             {
                 handler.HandleResume();
             }
-        }
 
-        public void AddPauseHandler(IPauseHandler handler)
-        {
-            _pauseHandlers.Add(handler);
-        }
-
-        public void RemovePauseHandler(IPauseHandler handler)
-        {
-            if (_pauseHandlers.Contains(handler))
-            {
-                _pauseHandlers.Remove(handler);
-            }
-            else
-            {
-                Debug.LogError(
-                    $"{nameof(PauseService)} {nameof(RemovePauseHandler)} — Trying to remove handler that doesn't exist");
-            }
+            _pauseMenuView.SetActive(false);
         }
     }
 }
