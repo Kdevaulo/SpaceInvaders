@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 5522217601646676956, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1713562857, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+      objectReference: {fileID: -2006768159, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
     - target: {fileID: 5522217602194945568, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -57,15 +57,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522217602194945574, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Name
-      value: ThaxEnemy
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.x
-      value: 0.4441038
+      value: 0.64560974
       objectReference: {fileID: 0}
     - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.y
-      value: 0.5234689
+      value: 0.80166566
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c7084cefb209994693f36795374dbb9, type: 3}

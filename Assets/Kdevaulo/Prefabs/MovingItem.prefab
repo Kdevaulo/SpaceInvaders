@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45301202, y: 0.58045363}
+  m_Size: {x: 0.42970833, y: 0.506875}
   m_EdgeRadius: 0
 --- !u!1 &5522217601646676946
 GameObject:
@@ -131,12 +131,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -213144950, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.95, y: 3.76}
+  m_Size: {x: 2.69, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -151,9 +151,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5522217602194945568}
-  - component: {fileID: 5522217602194945571}
+  - component: {fileID: 2482512337351252857}
   m_Layer: 0
-  m_Name: BalptenEnemy
+  m_Name: MovingItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5522217602194945571
+--- !u!114 &2482512337351252857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5522217602194945574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c72b000bce746b196b3f516e33b8d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: a3c51bdd24c74d62b04c18e5156fd389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Collider>k__BackingField: {fileID: 8379424894728992584}

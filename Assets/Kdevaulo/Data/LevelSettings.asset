@@ -15,45 +15,49 @@ MonoBehaviour:
   <EnemiesStartSpeed>k__BackingField: 0.001
   <EnemiesSpeedStep>k__BackingField: 0.001
   <VerticalStep>k__BackingField: -1
+  <PlayerSettings>k__BackingField:
+    View: {fileID: 623193015061781414, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
+    StartPosition: {x: 0, y: -7}
+    VulnerableProjectileLayer: 7
   <EnemiesSettings>k__BackingField:
   - Name: 0
-    View: {fileID: 5522217602194945571, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+    View: {fileID: 623193015061781414, guid: df0e68b348934204aa5c173e54a85645, type: 3}
     DropType: 0
     Count: 7
     RewardPoints: 10
     VulnerableProjectileLayer: 6
   - Name: 1
-    View: {fileID: 5522217602194945571, guid: 323334fbdb77622479318849892a6387, type: 3}
+    View: {fileID: 623193015061781414, guid: d2910365d06f37a47b777f1159b60187, type: 3}
     DropType: 1
     Count: 7
     RewardPoints: 20
     VulnerableProjectileLayer: 6
   - Name: 2
-    View: {fileID: 5522217602194945571, guid: 4f0c1ba05f1711649a210278aab29c6f, type: 3}
+    View: {fileID: 623193015061781414, guid: 4cff68d2cbdf2384fa818e089b933b78, type: 3}
     DropType: 2
     Count: 7
     RewardPoints: 10
     VulnerableProjectileLayer: 6
   - Name: 3
-    View: {fileID: 5522217602194945571, guid: 4b5afc88efe6daf439e5a0bf61b81123, type: 3}
+    View: {fileID: 623193015061781414, guid: 525b1aa1540fcb345ae7e00aeb5183f9, type: 3}
     DropType: 0
     Count: 7
     RewardPoints: 30
     VulnerableProjectileLayer: 6
   - Name: 4
-    View: {fileID: 5522217602194945571, guid: ec81230f599dab14797add022b181182, type: 3}
+    View: {fileID: 623193015061781414, guid: 83be7dfa13901ff4c95ad73bf0274b2f, type: 3}
     DropType: 1
     Count: 7
     RewardPoints: 20
     VulnerableProjectileLayer: 6
   - Name: 5
-    View: {fileID: 5522217602194945571, guid: 93fac9c0b0cce40438d4b1c8a2b9a56d, type: 3}
+    View: {fileID: 623193015061781414, guid: 93af4abff889e154bacb5fdea08c5134, type: 3}
     DropType: 2
     Count: 7
     RewardPoints: 10
     VulnerableProjectileLayer: 6
   - Name: 6
-    View: {fileID: 5522217602194945571, guid: 89094f8e4a851aa428d3b46626d0af8a, type: 3}
+    View: {fileID: 623193015061781414, guid: 93e84bea72a1f0e4fa36a154e9749c95, type: 3}
     DropType: 0
     Count: 7
     RewardPoints: 10
