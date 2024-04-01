@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
+using Kdevaulo.SpaceInvaders.PlayerBehaviour;
 
 using UnityEngine.Assertions;
 
 using Zenject;
+
+using Object = UnityEngine.Object;
 
 namespace Kdevaulo.SpaceInvaders.LevelSystem
 {
@@ -19,6 +22,9 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         [Inject]
         private EnemiesController _enemiesController;
+
+        [Inject]
+        private PlayerController _playerController;
 
         [Inject]
         private PositionsProvider _positionsProvider;
@@ -72,9 +78,21 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
             PlaceEnemies(enemies);
 
+            var playerModel = CreatePlayer(currentSettings.PlayerSettings);
+
             //todo: fix behaviour, remove peer-to-peer reference
             _enemiesController.Initialize(enemies, currentSettings.EnemiesStartSpeed, currentSettings.EnemiesSpeedStep,
                 currentSettings.VerticalStep);
+
+            //todo: fix behaviour, remove peer-to-peer reference
+            _playerController.Initialize(playerModel);
+        }
+
+        private PlayerModel CreatePlayer(PlayerSettings settings)
+        {
+            var view = Object.Instantiate(settings.View);
+            var model = new PlayerModel(view, settings);
+            return model;
         }
 
         private void PlaceEnemies(List<EnemyModel> enemies)

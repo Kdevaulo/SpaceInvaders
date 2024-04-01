@@ -1,4 +1,5 @@
 ﻿using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
+using Kdevaulo.SpaceInvaders.PlayerBehaviour;
 
 using UnityEngine;
 
@@ -11,8 +12,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         [field: SerializeField] public float EnemiesStartSpeed { get; private set; }
         [field: SerializeField] public float EnemiesSpeedStep { get; private set; }
         [field: SerializeField] public float VerticalStep { get; private set; }
-
-        [field: Header("References")]
+        [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [field: SerializeField] public EnemySettings[] EnemiesSettings { get; private set; }
     }
 }

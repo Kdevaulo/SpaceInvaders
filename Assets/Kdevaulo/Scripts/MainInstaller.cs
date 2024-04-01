@@ -2,14 +2,13 @@ using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.MenuBehaviour;
 using Kdevaulo.SpaceInvaders.PauseBehaviour;
+using Kdevaulo.SpaceInvaders.PlayerBehaviour;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
 using UnityEngine;
 using UnityEngine.UI;
 
 using Zenject;
-
-using DisposableManager = Kdevaulo.SpaceInvaders.DisposableBehaviour.DisposableManager;
 
 namespace Kdevaulo.SpaceInvaders
 {
@@ -19,21 +18,14 @@ namespace Kdevaulo.SpaceInvaders
         [Header("References")]
         [SerializeField] private RectTransform _canvas;
         [SerializeField] private CanvasScaler _canvasScaler;
+
         [SerializeField] private ScoreView _scoreView;
         [SerializeField] private PauseMenuView _pauseMenuView;
         [SerializeField] private PauseView _pauseView;
-        [SerializeField] private EnemyView _enemyView;
 
         [SerializeField] private PositionsProvider _positionsProvider;
 
         [SerializeField] private LevelSettings _levelSettings;
-
-        [SerializeField] private DisposableManager _disposableManager;
-
-        private void OnDestroy()
-        {
-            _disposableManager.DisposeAll();
-        }
 
         public override void InstallBindings()
         {
@@ -42,7 +34,6 @@ namespace Kdevaulo.SpaceInvaders
 
             Container.Bind<ScoreView>().FromInstance(_scoreView);
             Container.Bind<PauseView>().FromInstance(_pauseView);
-            Container.Bind<EnemyView>().FromInstance(_enemyView);
             Container.Bind<PauseMenuView>().FromInstance(_pauseMenuView);
 
             Container.Bind<LevelSettings>().FromInstance(_levelSettings);
@@ -55,6 +46,7 @@ namespace Kdevaulo.SpaceInvaders
             Container.Bind<LevelingService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelController>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemiesController>().AsSingle();
         }

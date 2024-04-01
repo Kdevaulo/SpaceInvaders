@@ -33,7 +33,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private bool _isLeftDirection;
         private bool _isPaused;
-        private bool _initialized;
+        private bool _isInitialized;
 
         private float _currentSpeed;
         private float _speedStep;
@@ -57,7 +57,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             }
 
             _isLeftDirection = false;
-            _initialized = true;
+            _isInitialized = true;
         }
 
         void IDisposable.Dispose()
@@ -73,7 +73,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             }
 
             _disposable.Dispose();
-            _initialized = false;
+            _isInitialized = false;
         }
 
         void IPauseHandler.HandlePause()
@@ -88,7 +88,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         void ITickable.Tick()
         {
-            if (_isPaused || !_initialized)
+            if (_isPaused || !_isInitialized)
             {
                 return;
             }

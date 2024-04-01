@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
+namespace Kdevaulo.SpaceInvaders
 {
-    [AddComponentMenu(nameof(EnemyView) + " in " + nameof(EnemiesBehaviour))]
-    public sealed class EnemyView : MonoBehaviour
+    [AddComponentMenu(nameof(MovingItemView) + " in " + nameof(SpaceInvaders))]
+    public sealed class MovingItemView : MonoBehaviour
     {
         [field: Header("References")]
         [field: SerializeField] public Collider2D Collider { get; private set; }

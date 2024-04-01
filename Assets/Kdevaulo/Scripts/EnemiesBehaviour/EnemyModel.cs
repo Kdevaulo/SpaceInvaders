@@ -16,7 +16,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             }
         }
 
-        public readonly EnemyView View;
+        public readonly MovingItemView View;
         public readonly DropItem DropType;
         public readonly Enemy Name;
 
@@ -28,7 +28,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private Vector2 _position;
 
-        public EnemyModel(EnemyView view, EnemySettings settings)
+        public EnemyModel(MovingItemView view, EnemySettings settings)
         {
             View = view;
             DropType = settings.DropType;
