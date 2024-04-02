@@ -1492,9 +1492,9 @@ MonoBehaviour:
   _canvas: {fileID: 1931037988}
   _canvasScaler: {fileID: 1931037986}
   _scoreView: {fileID: 450324139}
-  _pauseMenuView: {fileID: 1818525283}
   _pauseView: {fileID: 450324140}
-  _movingItemView: {fileID: 0}
+  _pauseMenuView: {fileID: 1818525283}
+  _bulletView: {fileID: 5833327632413797167, guid: 4dc4483da0f182b4a95658ec453b3e1a, type: 3}
   _positionsProvider: {fileID: 1033711605}
   _levelSettings: {fileID: 11400000, guid: 128357fe5385f4146ae57a107bb9aecb, type: 2}
 --- !u!1 &1162835034

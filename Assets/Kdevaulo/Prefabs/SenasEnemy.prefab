@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Size.x
+      value: 0.4403854
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Size.y
+      value: 0.56210184
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0022783056
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826692842049815678, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522217601646676946, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5522217601646676956, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -58,6 +82,10 @@ PrefabInstance:
     - target: {fileID: 5522217602194945574, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Name
       value: SenasEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522217602194945574, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.x
