@@ -62,15 +62,12 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         void IResourceHandler.Release()
         {
-            if (_enemies != null)
+            foreach (var enemy in _enemies)
             {
-                foreach (var enemy in _enemies)
-                {
-                    Object.Destroy(enemy.View.gameObject);
-                }
-
-                _enemies.Clear();
+                Object.Destroy(enemy.View.gameObject);
             }
+
+            _enemies.Clear();
 
             _disposable.Clear();
             _isInitialized = false;
@@ -108,6 +105,11 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             Object.Destroy(model.View.gameObject);
             _enemies.Remove(model);
             _currentSpeed += _speedStep;
+
+            if (_enemies.Count == 0)
+            {
+                _levelingService.StartNewStage();
+            }
         }
 
         private void MoveHorizontal()

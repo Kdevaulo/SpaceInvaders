@@ -6,20 +6,22 @@ using UniRx;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 using Zenject;
 
+using Object = UnityEngine.Object;
+
 namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 {
-    public sealed class PlayerController : IPauseHandler, IDisposable, ITickable
+    public sealed class PlayerController : IPauseHandler, IDisposable, ITickable, IResourceHandler
     {
         [Inject]
         private BulletService _bulletService;
-        
+
         [Inject]
         private Camera _camera;
 
+        private CompositeDisposable _disposable = new CompositeDisposable();
         private PlayerModel _model;
 
         private bool _isPaused;
@@ -38,15 +40,24 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             _shootingRate = _model.ShootingRate;
             _bulletSpeed = _model.BulletSpeed;
 
-            _model.View.OnBeginDrag.AsObservable().Subscribe(_ => _canMove = true);
-            _model.View.OnEndDrag.AsObservable().Subscribe(_ => _canMove = false);
-            _model.View.OnDrag.AsObservable().Subscribe(TryMove);
+            _model.View.OnBeginDrag.AsObservable()
+                .Subscribe(_ => _canMove = true)
+                .AddTo(_disposable);
+
+            _model.View.OnEndDrag.AsObservable()
+                .Subscribe(_ => _canMove = false)
+                .AddTo(_disposable);
+
+            _model.View.OnDrag.AsObservable()
+                .Subscribe(TryMove)
+                .AddTo(_disposable);
 
             _isInitialized = true;
         }
 
         void IDisposable.Dispose()
         {
+            _disposable.Dispose();
             _isInitialized = false;
         }
 
@@ -68,6 +79,13 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             }
 
             TryShoot();
+        }
+
+        void IResourceHandler.Release()
+        {
+            Object.Destroy(_model.View.gameObject);
+            _disposable.Clear();
+            _isInitialized = false;
         }
 
         private void TryShoot()
