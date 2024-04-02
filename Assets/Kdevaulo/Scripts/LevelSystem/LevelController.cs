@@ -26,18 +26,13 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         void IInitializable.Initialize()
         {
-            StartFromTheBeginning();
+            _levelingService.Initialize();
         }
 
         private void Restart()
         {
             _levelingService.Restart();
             _pauseService.Resume();
-        }
-
-        private void StartFromTheBeginning()
-        {
-            _levelingService.StartFromTheBeginning();
         }
 
         void IDisposable.Dispose()

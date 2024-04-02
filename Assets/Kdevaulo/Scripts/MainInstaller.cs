@@ -1,3 +1,4 @@
+using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.MenuBehaviour;
@@ -20,8 +21,9 @@ namespace Kdevaulo.SpaceInvaders
         [SerializeField] private CanvasScaler _canvasScaler;
 
         [SerializeField] private ScoreView _scoreView;
-        [SerializeField] private PauseMenuView _pauseMenuView;
         [SerializeField] private PauseView _pauseView;
+        [SerializeField] private PauseMenuView _pauseMenuView;
+        [SerializeField] private MovingItemView _bulletView;
 
         [SerializeField] private PositionsProvider _positionsProvider;
 
@@ -35,15 +37,18 @@ namespace Kdevaulo.SpaceInvaders
             Container.Bind<ScoreView>().FromInstance(_scoreView);
             Container.Bind<PauseView>().FromInstance(_pauseView);
             Container.Bind<PauseMenuView>().FromInstance(_pauseMenuView);
+            Container.Bind<MovingItemView>().FromInstance(_bulletView);
 
             Container.Bind<LevelSettings>().FromInstance(_levelSettings);
 
             Container.Bind<PositionsProvider>().FromInstance(_positionsProvider);
             Container.Bind<EnemiesFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle();
 
             Container.Bind<PauseService>().AsSingle();
             Container.Bind<ScoreService>().AsSingle();
             Container.Bind<LevelingService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BulletService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();

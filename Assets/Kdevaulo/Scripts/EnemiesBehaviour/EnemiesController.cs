@@ -16,7 +16,7 @@ using Object = UnityEngine.Object;
 
 namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
-    public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable
+    public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
         [Inject]
         private Rect _canvasRect;
@@ -27,7 +27,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         [Inject]
         private LevelingService _levelingService;
 
-        private List<EnemyModel> _enemies;
+        private List<EnemyModel> _enemies = new List<EnemyModel>();
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -51,7 +51,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 var view = enemy.View;
 
                 view.Collider.OnTriggerEnter2DAsObservable()
-                    .Where(x => x.gameObject.layer == enemy.VulnerableBulletLayer)
+                    .Where(x => x.CompareTag(enemy.VulnerableProjectileTag))
                     .Subscribe(_ => HandleKilledEvent(enemy))
                     .AddTo(_disposable);
             }
@@ -60,11 +60,11 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             _isInitialized = true;
         }
 
-        void IDisposable.Dispose()
+        void IResourceHandler.Release()
         {
             if (_enemies != null)
             {
-                foreach (var enemy in _enemies.Where(enemy => enemy.View))
+                foreach (var enemy in _enemies)
                 {
                     Object.Destroy(enemy.View.gameObject);
                 }
@@ -72,6 +72,12 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 _enemies.Clear();
             }
 
+            _disposable.Clear();
+            _isInitialized = false;
+        }
+
+        void IDisposable.Dispose()
+        {
             _disposable.Dispose();
             _isInitialized = false;
         }
@@ -99,8 +105,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private void HandleKilledEvent(EnemyModel model)
         {
+            Object.Destroy(model.View.gameObject);
+            _enemies.Remove(model);
             _currentSpeed += _speedStep;
-            Debug.Log(model.Name + " killed");
         }
 
         private void MoveHorizontal()

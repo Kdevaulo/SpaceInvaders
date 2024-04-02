@@ -9,6 +9,12 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
     {
         public MovingItemView View;
         public Vector2 StartPosition;
-        public int VulnerableProjectileLayer;
+        public Vector2 BulletDirection;
+        public string VulnerableProjectileTag;
+
+        [Min(0.00001f)]
+        public float ShootingRate;
+        [Min(0.00001f)]
+        public float BulletSpeed;
     }
 }

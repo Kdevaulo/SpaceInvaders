@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
 using Kdevaulo.SpaceInvaders.PlayerBehaviour;
 
+using UnityEngine;
 using UnityEngine.Assertions;
 
 using Zenject;
-
-using Object = UnityEngine.Object;
 
 namespace Kdevaulo.SpaceInvaders.LevelSystem
 {
     public sealed class LevelingService
     {
+        [Inject]
+        private IResourceHandler[] _resourceHandlers;
+
         [Inject]
         private LevelSettings[] _levelSettings;
 
@@ -40,6 +41,11 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         public void StartFromTheBeginning()
         {
             ClearLevel();
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             _currentLevel = 0;
             InitializeLevel(_currentLevel);
         }
@@ -53,8 +59,10 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         public void ClearLevel()
         {
-            var disposable = _enemiesController as IDisposable;
-            disposable.Dispose();
+            foreach (var handler in _resourceHandlers)
+            {
+                handler.Release();
+            }
         }
 
         private void InitializeLevel(int levelIndex)

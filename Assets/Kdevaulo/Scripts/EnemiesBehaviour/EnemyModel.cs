@@ -21,7 +21,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         public readonly Enemy Name;
 
         public readonly int RewardPoints;
-        public readonly int VulnerableBulletLayer;
+        public readonly string VulnerableProjectileTag;
 
         private readonly float HalfHorizontalSize;
         private readonly float HalfVerticalSize;
@@ -34,7 +34,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             DropType = settings.DropType;
             Name = settings.Name;
             RewardPoints = settings.RewardPoints;
-            VulnerableBulletLayer = settings.VulnerableProjectileLayer;
+            VulnerableProjectileTag = settings.VulnerableProjectileTag;
 
             var bounds = view.Collider.bounds;
             HalfHorizontalSize = bounds.size.x / 2;

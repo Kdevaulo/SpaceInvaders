@@ -12,6 +12,6 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         public DropItem DropType;
         public int Count;
         public int RewardPoints;
-        public int VulnerableProjectileLayer;
+        public string VulnerableProjectileTag;
     }
 }

@@ -16,7 +16,11 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         public readonly MovingItemView View;
 
-        public readonly int VulnerableBulletLayer;
+        public readonly string VulnerableProjectileTag;
+        public readonly string PlayerTag;
+        public readonly float ShootingRate;
+        public readonly float BulletSpeed;
+        public readonly Vector2 BulletDirection;
 
         private Vector2 _position;
 
@@ -24,7 +28,11 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             View = view;
             Position = settings.StartPosition;
-            VulnerableBulletLayer = settings.VulnerableProjectileLayer;
+            VulnerableProjectileTag = settings.VulnerableProjectileTag;
+            ShootingRate = settings.ShootingRate;
+            BulletSpeed = settings.BulletSpeed;
+            BulletDirection = settings.BulletDirection;
+            PlayerTag = View.tag;
         }
     }
 }

@@ -9,7 +9,10 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
     public sealed class LevelSettings : ScriptableObject
     {
         [field: Header("Values")]
+        [field: Min(0.00001f)]
         [field: SerializeField] public float EnemiesStartSpeed { get; private set; }
+
+        [field: Min(0.00001f)]
         [field: SerializeField] public float EnemiesSpeedStep { get; private set; }
         [field: SerializeField] public float VerticalStep { get; private set; }
         [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
