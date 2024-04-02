@@ -3,7 +3,7 @@
 namespace Kdevaulo.SpaceInvaders
 {
     [AddComponentMenu(nameof(MovingItemView) + " in " + nameof(SpaceInvaders))]
-    public sealed class MovingItemView : MonoBehaviour
+    public class MovingItemView : MonoBehaviour
     {
         [field: Header("References")]
         [field: SerializeField] public Collider2D Collider { get; private set; }

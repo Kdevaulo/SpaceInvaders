@@ -2,7 +2,11 @@
 
 using Kdevaulo.SpaceInvaders.BulletBehaviour;
 
+using UniRx;
+
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 using Zenject;
 
@@ -12,11 +16,16 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
     {
         [Inject]
         private BulletService _bulletService;
+        
+        [Inject]
+        private Camera _camera;
 
         private PlayerModel _model;
 
         private bool _isPaused;
         private bool _isInitialized;
+
+        private bool _canMove;
 
         private float _shootingRate;
         private float _currentTime;
@@ -28,6 +37,10 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
             _shootingRate = _model.ShootingRate;
             _bulletSpeed = _model.BulletSpeed;
+
+            _model.View.OnBeginDrag.AsObservable().Subscribe(_ => _canMove = true);
+            _model.View.OnEndDrag.AsObservable().Subscribe(_ => _canMove = false);
+            _model.View.OnDrag.AsObservable().Subscribe(TryMove);
 
             _isInitialized = true;
         }
@@ -54,6 +67,11 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
                 return;
             }
 
+            TryShoot();
+        }
+
+        private void TryShoot()
+        {
             if (_currentTime > 0)
             {
                 _currentTime -= Time.deltaTime;
@@ -68,6 +86,14 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         private void Shoot()
         {
             _bulletService.AddBullet(_model.BulletDirection, _bulletSpeed, _model.Position, _model.PlayerTag);
+        }
+
+        private void TryMove(PointerEventData eventData)
+        {
+            if (_canMove || !_isPaused)
+            {
+                _model.Position = _camera.ScreenToWorldPoint(eventData.position);
+            }
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Kdevaulo.SpaceInvaders
         [Header("References")]
         [SerializeField] private RectTransform _canvas;
         [SerializeField] private CanvasScaler _canvasScaler;
+        [SerializeField] private Camera _camera;
 
         [SerializeField] private ScoreView _scoreView;
         [SerializeField] private PauseView _pauseView;
@@ -33,6 +34,7 @@ namespace Kdevaulo.SpaceInvaders
         {
             Container.Bind<Rect>().FromInstance(_canvas.rect);
             Container.Bind<CanvasScaler>().FromInstance(_canvasScaler);
+            Container.Bind<Camera>().FromInstance(_camera);
 
             Container.Bind<ScoreView>().FromInstance(_scoreView);
             Container.Bind<PauseView>().FromInstance(_pauseView);

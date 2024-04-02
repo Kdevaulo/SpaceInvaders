@@ -7,7 +7,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
     [Serializable]
     public sealed class PlayerSettings
     {
-        public MovingItemView View;
+        public DraggableItemView View;
         public Vector2 StartPosition;
         public Vector2 BulletDirection;
         public string VulnerableProjectileTag;

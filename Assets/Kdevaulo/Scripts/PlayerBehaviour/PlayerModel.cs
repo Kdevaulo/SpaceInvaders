@@ -14,7 +14,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             }
         }
 
-        public readonly MovingItemView View;
+        public readonly DraggableItemView View;
 
         public readonly string VulnerableProjectileTag;
         public readonly string PlayerTag;
@@ -24,7 +24,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private Vector2 _position;
 
-        public PlayerModel(MovingItemView view, PlayerSettings settings)
+        public PlayerModel(DraggableItemView view, PlayerSettings settings)
         {
             View = view;
             Position = settings.StartPosition;
