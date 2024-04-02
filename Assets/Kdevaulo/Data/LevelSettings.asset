@@ -16,7 +16,7 @@ MonoBehaviour:
   <EnemiesSpeedStep>k__BackingField: 0.00005
   <VerticalStep>k__BackingField: -1
   <PlayerSettings>k__BackingField:
-    View: {fileID: 623193015061781414, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
+    View: {fileID: 8251147767129796150, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
     StartPosition: {x: 0, y: -7}
     BulletDirection: {x: 0, y: 1}
     VulnerableProjectileTag: Enemy

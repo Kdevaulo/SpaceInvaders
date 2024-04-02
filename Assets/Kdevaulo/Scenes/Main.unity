@@ -1491,6 +1491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 1931037988}
   _canvasScaler: {fileID: 1931037986}
+  _camera: {fileID: 963194227}
   _scoreView: {fileID: 450324139}
   _pauseView: {fileID: 450324140}
   _pauseMenuView: {fileID: 1818525283}
