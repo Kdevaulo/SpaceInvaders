@@ -8,7 +8,6 @@ using UniRx;
 using UniRx.Triggers;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 using Zenject;
 
@@ -19,10 +18,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
     public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
         [Inject]
-        private Rect _canvasRect;
-
-        [Inject]
-        private CanvasScaler _canvasScaler;
+        private ScreenUtilities _screenUtilities;
 
         [Inject]
         private LevelingService _levelingService;
@@ -39,12 +35,16 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private float _speedStep;
         private float _verticalStep;
 
+        private Rect _screenRect;
+
         public void Initialize(List<EnemyModel> enemies, float startSpeed, float speedStep, float verticalStep)
         {
             _enemies = enemies;
             _currentSpeed = startSpeed;
             _speedStep = speedStep;
             _verticalStep = verticalStep;
+
+            _screenRect = _screenUtilities.GetScreenRectInUnits();
 
             foreach (var enemy in _enemies)
             {
@@ -121,11 +121,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private void HandleScreenCollisions()
         {
-            float ppu = _canvasScaler.referencePixelsPerUnit;
-            var boundsX = new Vector2(_canvasRect.xMin / ppu, _canvasRect.xMax / ppu);
-            var boundsY = new Vector2(_canvasRect.yMin / ppu, _canvasRect.yMax / ppu);
-
-            bool switchDirection = _enemies.Any(enemy => enemy.IsOutOfBoundsHorizontal(boundsX));
+            bool switchDirection = _enemies.Any(enemy => enemy.IsOutOfBoundsHorizontal(_screenRect));
 
             if (switchDirection)
             {
@@ -133,7 +129,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 _isLeftDirection = !_isLeftDirection;
             }
 
-            bool outOfBounds = _enemies.Any(enemy => enemy.IsOutOfBoundsVertical(boundsY));
+            bool outOfBounds = _enemies.Any(enemy => enemy.IsOutOfBoundsVertical(_screenRect));
 
             if (outOfBounds)
             {

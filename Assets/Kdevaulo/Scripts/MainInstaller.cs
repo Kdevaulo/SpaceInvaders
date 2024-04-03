@@ -46,6 +46,7 @@ namespace Kdevaulo.SpaceInvaders
             Container.Bind<PositionsProvider>().FromInstance(_positionsProvider);
             Container.Bind<EnemiesFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle();
+            Container.Bind<ScreenUtilities>().AsSingle();
 
             Container.Bind<PauseService>().AsSingle();
             Container.Bind<ScoreService>().AsSingle();

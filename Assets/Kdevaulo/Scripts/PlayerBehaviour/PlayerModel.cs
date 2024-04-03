@@ -18,8 +18,10 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         public readonly string VulnerableProjectileTag;
         public readonly string PlayerTag;
+
         public readonly float ShootingRate;
         public readonly float BulletSpeed;
+
         public readonly Vector2 BulletDirection;
 
         private Vector2 _position;

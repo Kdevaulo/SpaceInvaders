@@ -41,14 +41,14 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             HalfVerticalSize = bounds.size.y / 2;
         }
 
-        public bool IsOutOfBoundsHorizontal(Vector2 boundsX)
+        public bool IsOutOfBoundsHorizontal(Rect rect)
         {
-            return Position.x - HalfHorizontalSize < boundsX.x || Position.x + HalfHorizontalSize > boundsX.y;
+            return Position.x - HalfHorizontalSize < rect.xMin || Position.x + HalfHorizontalSize > rect.xMax;
         }
 
-        public bool IsOutOfBoundsVertical(Vector2 boundsY)
+        public bool IsOutOfBoundsVertical(Rect rect)
         {
-            return Position.y - HalfVerticalSize < boundsY.x || Position.y + HalfVerticalSize > boundsY.y;
+            return Position.y - HalfVerticalSize < rect.yMin || Position.y + HalfVerticalSize > rect.yMax;
         }
     }
 }

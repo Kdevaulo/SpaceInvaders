@@ -12,15 +12,23 @@ using Object = UnityEngine.Object;
 
 namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 {
-    public sealed class BulletService : ITickable, IPauseHandler, IDisposable, IResourceHandler
+    public sealed class BulletService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
         [Inject]
         private BulletPool _bulletPool;
 
+        [Inject]
+        private ScreenUtilities _screenUtilities;
+
         private CompositeDisposable _disposable = new CompositeDisposable();
+
         private List<BulletModel> _activeBullets = new List<BulletModel>();
+        private List<BulletModel> _bulletsToReturn = new List<BulletModel>();
+
+        private Dictionary<BulletModel, IDisposable> _disposableByModel = new Dictionary<BulletModel, IDisposable>();
 
         private bool _isPaused;
+        private Rect _screenRect;
 
         public void AddBullet(Vector2 direction, float speed, Vector2 startPosition, string shooterTag)
         {
@@ -29,10 +37,17 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
             var model = new BulletModel(view, direction, speed, startPosition);
             _activeBullets.Add(model);
 
-            view.Collider.OnTriggerEnter2DAsObservable()
+            var disposable = view.Collider.OnTriggerEnter2DAsObservable()
                 .Where(x => !x.CompareTag(shooterTag))
-                .Subscribe(_ => HandleCollision(model))
+                .Subscribe(_ => { ReturnBullet(model); })
                 .AddTo(_disposable);
+
+            _disposableByModel.Add(model, disposable);
+        }
+
+        void IInitializable.Initialize()
+        {
+            _screenRect = _screenUtilities.GetScreenRectInUnits();
         }
 
         void ITickable.Tick()
@@ -42,7 +57,15 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
             foreach (var bullet in _activeBullets)
             {
                 bullet.Position += bullet.Speed * bullet.Direction;
+                HandleScreenCollisions(bullet);
             }
+
+            foreach (var bullet in _bulletsToReturn)
+            {
+                ReturnBullet(bullet);
+            }
+
+            _bulletsToReturn.Clear();
         }
 
         void IPauseHandler.HandlePause()
@@ -64,17 +87,33 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
         {
             foreach (var bullet in _activeBullets)
             {
-                Object.Destroy(bullet.View);
+                Object.Destroy(bullet.View.gameObject);
+            }
+
+            foreach (var bullet in _bulletsToReturn)
+            {
+                Object.Destroy(bullet.View.gameObject);
             }
 
             _activeBullets.Clear();
             _disposable.Clear();
         }
 
-        private void HandleCollision(BulletModel model)
+        private void HandleScreenCollisions(BulletModel model)
+        {
+            if (model.IsOutOfBoundsVertical(_screenRect) || model.IsOutOfBoundsHorizontal(_screenRect))
+            {
+                _bulletsToReturn.Add(model);
+            }
+        }
+
+        private void ReturnBullet(BulletModel model)
         {
             _bulletPool.ReturnToPool(model.View);
             _activeBullets.Remove(model);
+
+            _disposableByModel[model].Dispose();
+            _disposableByModel.Remove(model);
         }
     }
 }

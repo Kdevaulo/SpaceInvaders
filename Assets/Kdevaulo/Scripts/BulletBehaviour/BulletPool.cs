@@ -14,7 +14,7 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         private Stack<MovingItemView> _stack;
 
-        private uint _initialPoolSize = 3;
+        private uint _initialPoolSize = 2;
 
         public MovingItemView GetPooledObject()
         {

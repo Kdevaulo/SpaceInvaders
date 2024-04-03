@@ -19,7 +19,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         private BulletService _bulletService;
 
         [Inject]
-        private Camera _camera;
+        private ScreenUtilities _screenUtilities;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
         private PlayerModel _model;
@@ -110,7 +110,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             if (_canMove || !_isPaused)
             {
-                _model.Position = _camera.ScreenToWorldPoint(eventData.position);
+                _model.Position = _screenUtilities.ScreenToWorldPoint(eventData.position);
             }
         }
     }
