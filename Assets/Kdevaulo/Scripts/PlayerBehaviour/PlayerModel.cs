@@ -21,6 +21,9 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         public readonly float ShootingRate;
         public readonly float BulletSpeed;
+        public readonly float MovementSpeed;
+        public readonly float HalfVerticalSize;
+        public readonly float HalfHorizontalSize;
 
         public readonly Vector2 BulletDirection;
 
@@ -30,10 +33,15 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             View = view;
             Position = settings.StartPosition;
-            VulnerableProjectileTag = settings.VulnerableProjectileTag;
-            ShootingRate = settings.ShootingRate;
             BulletSpeed = settings.BulletSpeed;
+            ShootingRate = settings.ShootingRate;
+            MovementSpeed = settings.MovementSpeed;
             BulletDirection = settings.BulletDirection;
+            VulnerableProjectileTag = settings.VulnerableProjectileTag;
+
+            HalfVerticalSize = View.VerticalSize / 2;
+            HalfHorizontalSize = View.HorizontalSize / 2;
+
             PlayerTag = View.tag;
         }
     }

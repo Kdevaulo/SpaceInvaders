@@ -16,5 +16,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         public float ShootingRate;
         [Min(0.00001f)]
         public float BulletSpeed;
+        [Min(0.00001f)]
+        public float MovementSpeed;
     }
 }

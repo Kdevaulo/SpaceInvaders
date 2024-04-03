@@ -33,12 +33,18 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         private float _currentTime;
         private float _bulletSpeed;
 
+        private Rect _screenRect;
+        private Vector2 _targetPosition;
+
         public void Initialize(PlayerModel model)
         {
             _model = model;
 
             _shootingRate = _model.ShootingRate;
             _bulletSpeed = _model.BulletSpeed;
+
+            _screenRect = _screenUtilities.GetScreenRectInUnits();
+            _targetPosition = _model.Position;
 
             _model.View.OnBeginDrag.AsObservable()
                 .Subscribe(_ => _canMove = true)
@@ -49,7 +55,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
                 .AddTo(_disposable);
 
             _model.View.OnDrag.AsObservable()
-                .Subscribe(TryMove)
+                .Subscribe(TryChangeTargetPosition)
                 .AddTo(_disposable);
 
             _isInitialized = true;
@@ -78,6 +84,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
                 return;
             }
 
+            TryMove();
             TryShoot();
         }
 
@@ -101,16 +108,28 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             }
         }
 
+        private void TryMove()
+        {
+            _model.Position = Vector2.Lerp(_model.Position, _targetPosition, _model.MovementSpeed);
+        }
+
         private void Shoot()
         {
             _bulletService.AddBullet(_model.BulletDirection, _bulletSpeed, _model.Position, _model.PlayerTag);
         }
 
-        private void TryMove(PointerEventData eventData)
+        private void TryChangeTargetPosition(PointerEventData eventData)
         {
             if (_canMove || !_isPaused)
             {
-                _model.Position = _screenUtilities.ScreenToWorldPoint(eventData.position);
+                var eventDataPosition = _screenUtilities.ScreenToWorldPoint(eventData.position);
+
+                bool isOutOfRect = _screenUtilities.IsOutOfRect(eventDataPosition, _model.HalfVerticalSize,
+                    _model.HalfHorizontalSize, _screenRect);
+
+                if (isOutOfRect) return;
+
+                _targetPosition = eventDataPosition;
             }
         }
     }

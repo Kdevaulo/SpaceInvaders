@@ -17,7 +17,7 @@ namespace Kdevaulo.SpaceInvaders
     public sealed class MainInstaller : MonoInstaller
     {
         [Header("References")]
-        [SerializeField] private RectTransform _canvas;
+        [SerializeField] private RectTransform _safeZone;
         [SerializeField] private CanvasScaler _canvasScaler;
         [SerializeField] private Camera _camera;
 
@@ -32,7 +32,7 @@ namespace Kdevaulo.SpaceInvaders
 
         public override void InstallBindings()
         {
-            Container.Bind<Rect>().FromInstance(_canvas.rect);
+            Container.Bind<RectTransform>().FromInstance(_safeZone);
             Container.Bind<CanvasScaler>().FromInstance(_canvasScaler);
             Container.Bind<Camera>().FromInstance(_camera);
 
