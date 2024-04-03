@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.x
-      value: 0.647524
+      value: 0.99380976
       objectReference: {fileID: 0}
     - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.y
-      value: 0.82196885
+      value: 1.2615451
       objectReference: {fileID: 0}
     - target: {fileID: 3583399312187589319, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Offset.x
@@ -122,6 +122,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Collider>k__BackingField: {fileID: 1976917370723729944}
   _transform: {fileID: 7383505117873878783}
+  <VerticalSize>k__BackingField: 0.82
+  <HorizontalSize>k__BackingField: 0.65
+  OnBeginDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndDrag:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &7383505117873878783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5522217602194945568, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
