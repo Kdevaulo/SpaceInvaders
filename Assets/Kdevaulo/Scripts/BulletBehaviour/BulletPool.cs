@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 using Zenject;
 
-using Object = UnityEngine.Object;
-
 namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 {
-    public sealed class BulletPool : IInitializable, IDisposable, IResourceHandler
+    public sealed class BulletPool : IInitializable, IResourceHandler
     {
         [Inject]
         private MovingItemView _objectToPool;
 
         private Stack<MovingItemView> _stack;
-
-        private uint _initialPoolSize = 2;
 
         public MovingItemView GetPooledObject()
         {
@@ -39,26 +36,9 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
             pooledObject.gameObject.SetActive(false);
         }
 
-        void IDisposable.Dispose()
-        {
-            _stack.Clear();
-        }
-
         void IInitializable.Initialize()
         {
-            if (_objectToPool == null)
-            {
-                return;
-            }
-
             _stack = new Stack<MovingItemView>();
-
-            for (int i = 0; i < _initialPoolSize; i++)
-            {
-                var instance = Object.Instantiate(_objectToPool);
-                instance.gameObject.SetActive(false);
-                _stack.Push(instance);
-            }
         }
 
         void IResourceHandler.Release()

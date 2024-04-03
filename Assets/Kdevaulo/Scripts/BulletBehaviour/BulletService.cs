@@ -8,8 +8,6 @@ using UnityEngine;
 
 using Zenject;
 
-using Object = UnityEngine.Object;
-
 namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 {
     public sealed class BulletService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
@@ -80,22 +78,25 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         void IDisposable.Dispose()
         {
+            foreach (var disposable in _disposableByModel)
+            {
+                disposable.Value.Dispose();
+            }
+
             _disposable.Dispose();
         }
 
         void IResourceHandler.Release()
         {
-            foreach (var bullet in _activeBullets)
-            {
-                Object.Destroy(bullet.View.gameObject);
-            }
+            _bulletsToReturn.AddRange(_activeBullets);
 
             foreach (var bullet in _bulletsToReturn)
             {
-                Object.Destroy(bullet.View.gameObject);
+                ReturnBullet(bullet);
             }
 
             _activeBullets.Clear();
+            _bulletsToReturn.Clear();
             _disposable.Clear();
         }
 
