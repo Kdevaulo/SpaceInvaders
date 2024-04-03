@@ -28,10 +28,10 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
         private bool _isPaused;
         private Rect _screenRect;
 
-        public void AddBullet(Vector2 direction, float speed, Vector2 startPosition, string shooterTag)
+        public void AddBullet(Vector2 direction, float speed, Vector2 startPosition, string shooterTag, string bulletTag)
         {
             var view = _bulletPool.GetPooledObject();
-            view.tag = shooterTag;
+            view.tag = bulletTag;
             var model = new BulletModel(view, direction, speed, startPosition);
             _activeBullets.Add(model);
 

@@ -1,8 +1,11 @@
 ﻿using System;
 
 using Kdevaulo.SpaceInvaders.BulletBehaviour;
+using Kdevaulo.SpaceInvaders.LevelSystem;
+using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
 using UniRx;
+using UniRx.Triggers;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +20,12 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
     {
         [Inject]
         private BulletService _bulletService;
+
+        [Inject]
+        private LevelingService _levelingService;
+        
+        [Inject]
+        private ScoreService _scoreService;
 
         [Inject]
         private ScreenUtilities _screenUtilities;
@@ -45,6 +54,15 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
             _screenRect = _screenUtilities.GetScreenRectInUnits();
             _targetPosition = _model.Position;
+
+            _model.View.Collider.OnTriggerEnter2DAsObservable()
+                .Where(x => x.CompareTag(_model.VulnerableProjectileTag))
+                .Subscribe(_ =>
+                {
+                    _levelingService.Restart();
+                    _scoreService.Clear();
+                })
+                .AddTo(_disposable);
 
             _model.View.OnBeginDrag.AsObservable()
                 .Subscribe(_ => _canMove = true)
@@ -115,7 +133,8 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void Shoot()
         {
-            _bulletService.AddBullet(_model.BulletDirection, _bulletSpeed, _model.Position, _model.PlayerTag);
+            _bulletService.AddBullet(_model.BulletDirection, _bulletSpeed, _model.Position, _model.PlayerTag,
+                _model.BulletTag);
         }
 
         private void TryChangeTargetPosition(PointerEventData eventData)

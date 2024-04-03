@@ -9,13 +9,13 @@ namespace Kdevaulo.SpaceInvaders.ScoreBehaviour
 
         private int _currentScore;
 
-        public void AddScore(int score)
+        public void Add(int score)
         {
             _currentScore += score;
             _scoreView.SetScore(_currentScore);
         }
 
-        public void ClearScore()
+        public void Clear()
         {
             _currentScore = 0;
             _scoreView.SetScore(_currentScore);

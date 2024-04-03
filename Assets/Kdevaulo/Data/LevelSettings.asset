@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelSettings
   m_EditorClassIdentifier: 
   <VerticalStep>k__BackingField: -1
-  <EnemiesSpeed>k__BackingField: {x: 0.0003, y: 0.02}
+  <EnemiesSpeedBounds>k__BackingField: {x: 0.0003, y: 0.02}
   <EnemyMovementPattern>k__BackingField:
     serializedVersion: 2
     m_Curve:
@@ -51,6 +51,7 @@ MonoBehaviour:
     View: {fileID: 8251147767129796150, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
     StartPosition: {x: 0, y: -7}
     BulletDirection: {x: 0, y: 1}
+    BulletTag: PlayerBullet
     VulnerableProjectileTag: Enemy
     ShootingRate: 0.75
     BulletSpeed: 0.045
@@ -61,40 +62,40 @@ MonoBehaviour:
     DropType: 0
     Count: 7
     RewardPoints: 10
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 1
     View: {fileID: 623193015061781414, guid: d2910365d06f37a47b777f1159b60187, type: 3}
     DropType: 1
     Count: 7
     RewardPoints: 20
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 2
     View: {fileID: 623193015061781414, guid: 4cff68d2cbdf2384fa818e089b933b78, type: 3}
     DropType: 2
     Count: 7
     RewardPoints: 10
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 3
     View: {fileID: 623193015061781414, guid: 525b1aa1540fcb345ae7e00aeb5183f9, type: 3}
     DropType: 0
     Count: 7
     RewardPoints: 30
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 4
     View: {fileID: 623193015061781414, guid: 83be7dfa13901ff4c95ad73bf0274b2f, type: 3}
     DropType: 1
     Count: 7
     RewardPoints: 20
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 5
     View: {fileID: 623193015061781414, guid: 93af4abff889e154bacb5fdea08c5134, type: 3}
     DropType: 2
     Count: 7
     RewardPoints: 10
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet
   - Name: 6
     View: {fileID: 623193015061781414, guid: 93e84bea72a1f0e4fa36a154e9749c95, type: 3}
     DropType: 0
     Count: 7
     RewardPoints: 10
-    VulnerableProjectileTag: Player
+    VulnerableProjectileTag: PlayerBullet

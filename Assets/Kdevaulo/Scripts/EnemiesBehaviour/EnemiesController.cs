@@ -123,7 +123,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 _currentSpeed = Mathf.Lerp(_speedBounds.x, _speedBounds.y, t);
             }
 
-            _scoreService.AddScore(model.RewardPoints);
+            _scoreService.Add(model.RewardPoints);
 
             if (_enemies.Count == 0)
             {
@@ -153,7 +153,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             if (outOfBounds)
             {
                 _levelingService.Restart();
-                _scoreService.ClearScore();
+                _scoreService.Clear();
             }
         }
 

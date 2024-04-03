@@ -18,6 +18,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         public readonly string VulnerableProjectileTag;
         public readonly string PlayerTag;
+        public readonly string BulletTag;
 
         public readonly float ShootingRate;
         public readonly float BulletSpeed;
@@ -43,6 +44,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             HalfHorizontalSize = View.HorizontalSize / 2;
 
             PlayerTag = View.tag;
+            BulletTag = settings.BulletTag;
         }
     }
 }

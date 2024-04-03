@@ -36,7 +36,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         private void Restart()
         {
             _levelingService.Restart();
-            _scoreService.ClearScore();
+            _scoreService.Clear();
             _pauseService.Resume();
         }
 
