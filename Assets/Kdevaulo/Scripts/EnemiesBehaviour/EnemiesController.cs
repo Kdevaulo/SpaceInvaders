@@ -35,19 +35,27 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private bool _isPaused;
         private bool _isInitialized;
 
+        private int _maxEnemies;
+
         private float _currentSpeed;
-        private float _speedStep;
         private float _verticalStep;
+
+        private Vector2 _speedBounds;
+
+        private AnimationCurve _speedFunction;
 
         private Rect _screenRect;
 
-        public void Initialize(List<EnemyModel> enemies, float startSpeed, float speedStep, float verticalStep)
+        public void Initialize(List<EnemyModel> enemies, Vector2 startSpeed, AnimationCurve speedFunction,
+            float verticalStep)
         {
             _enemies = enemies;
-            _currentSpeed = startSpeed;
-            _speedStep = speedStep;
+            _speedBounds = startSpeed;
+            _speedFunction = speedFunction;
             _verticalStep = verticalStep;
 
+            _currentSpeed = _speedBounds.x;
+            _maxEnemies = _enemies.Count;
             _screenRect = _screenUtilities.GetScreenRectInUnits();
 
             foreach (var enemy in _enemies)
@@ -108,7 +116,12 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         {
             Object.Destroy(model.View.gameObject);
             _enemies.Remove(model);
-            _currentSpeed += _speedStep;
+
+            if (_enemies.Count > 0)
+            {
+                float t = _speedFunction.Evaluate(1f - _enemies.Count / (float) _maxEnemies);
+                _currentSpeed = Mathf.Lerp(_speedBounds.x, _speedBounds.y, t);
+            }
 
             _scoreService.AddScore(model.RewardPoints);
 
