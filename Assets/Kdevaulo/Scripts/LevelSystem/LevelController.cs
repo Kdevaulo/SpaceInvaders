@@ -2,6 +2,7 @@
 
 using Kdevaulo.SpaceInvaders.MenuBehaviour;
 using Kdevaulo.SpaceInvaders.PauseBehaviour;
+using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
 using UniRx;
 
@@ -13,6 +14,9 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
     {
         [Inject]
         private LevelingService _levelingService;
+
+        [Inject]
+        private ScoreService _scoreService;
 
         [Inject]
         private PauseService _pauseService;
@@ -32,6 +36,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         private void Restart()
         {
             _levelingService.Restart();
+            _scoreService.ClearScore();
             _pauseService.Resume();
         }
 

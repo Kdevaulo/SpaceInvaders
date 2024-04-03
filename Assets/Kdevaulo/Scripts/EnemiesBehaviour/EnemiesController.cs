@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Kdevaulo.SpaceInvaders.LevelSystem;
+using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
 using UniRx;
 using UniRx.Triggers;
@@ -22,6 +23,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         [Inject]
         private LevelingService _levelingService;
+
+        [Inject]
+        private ScoreService _scoreService;
 
         private List<EnemyModel> _enemies = new List<EnemyModel>();
 
@@ -106,6 +110,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             _enemies.Remove(model);
             _currentSpeed += _speedStep;
 
+            _scoreService.AddScore(model.RewardPoints);
+
             if (_enemies.Count == 0)
             {
                 _levelingService.StartNewStage();
@@ -134,6 +140,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             if (outOfBounds)
             {
                 _levelingService.Restart();
+                _scoreService.ClearScore();
             }
         }
 
