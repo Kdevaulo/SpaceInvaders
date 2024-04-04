@@ -16,9 +16,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         public string VulnerableProjectileTag;
 
         [Min(0.00001f)]
-        public float ShootingRate;
-        [Min(0.00001f)]
-        public float BulletSpeed;
+        public float ShootingDelay;
         [Min(0.00001f)]
         public float MovementSpeed;
     }

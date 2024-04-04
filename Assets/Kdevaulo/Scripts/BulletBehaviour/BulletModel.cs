@@ -15,20 +15,18 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
         }
 
         public readonly MovingItemView View;
-        public readonly Vector2 Direction;
 
-        public readonly float Speed;
+        public readonly Vector2 Direction;
 
         private readonly float HalfHorizontalSize;
         private readonly float HalfVerticalSize;
 
         private Vector2 _position;
 
-        public BulletModel(MovingItemView view, Vector2 direction, float speed, Vector2 startPosition)
+        public BulletModel(MovingItemView view, Vector2 direction, Vector2 startPosition)
         {
             View = view;
             Direction = direction;
-            Speed = speed;
             Position = startPosition;
 
             var bounds = view.Collider.bounds;

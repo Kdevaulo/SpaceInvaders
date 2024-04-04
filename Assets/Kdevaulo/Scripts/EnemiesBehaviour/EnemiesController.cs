@@ -18,6 +18,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
     public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
+        private const float MoveStepDivider = 10;
+
         [Inject]
         private ScreenUtilities _screenUtilities;
 
@@ -37,24 +39,27 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private int _maxEnemies;
 
-        private float _currentSpeed;
+        private float _currentMoveDelay;
         private float _verticalStep;
+        private float _moveTimeCounter;
 
-        private Vector2 _speedBounds;
+        private Vector2 _moveDelayBounds;
 
         private AnimationCurve _speedFunction;
 
         private Rect _screenRect;
 
-        public void Initialize(List<EnemyModel> enemies, Vector2 startSpeed, AnimationCurve speedFunction,
+        public void Initialize(List<EnemyModel> enemies, Vector2 moveDelayBounds, AnimationCurve speedFunction,
             float verticalStep)
         {
             _enemies = enemies;
-            _speedBounds = startSpeed;
+            _moveDelayBounds = moveDelayBounds;
             _speedFunction = speedFunction;
             _verticalStep = verticalStep;
 
-            _currentSpeed = _speedBounds.x;
+            _currentMoveDelay = _moveDelayBounds.x;
+            _moveTimeCounter = _currentMoveDelay;
+
             _maxEnemies = _enemies.Count;
             _screenRect = _screenUtilities.GetScreenRectInUnits();
 
@@ -108,8 +113,14 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 return;
             }
 
-            MoveHorizontal();
-            HandleScreenCollisions();
+            _moveTimeCounter -= Time.deltaTime;
+
+            if (_moveTimeCounter <= 0)
+            {
+                MoveHorizontal();
+                HandleScreenCollisions();
+                _moveTimeCounter = _currentMoveDelay;
+            }
         }
 
         private void HandleKilledEvent(EnemyModel model)
@@ -120,7 +131,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             if (_enemies.Count > 0)
             {
                 float t = _speedFunction.Evaluate(1f - _enemies.Count / (float) _maxEnemies);
-                _currentSpeed = Mathf.Lerp(_speedBounds.x, _speedBounds.y, t);
+                _currentMoveDelay = Mathf.Lerp(_moveDelayBounds.x, _moveDelayBounds.y, t);
             }
 
             _scoreService.Add(model.RewardPoints);
@@ -135,7 +146,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         {
             var offset = _isLeftDirection ? Vector2.left : Vector2.right;
 
-            DoWithEach(enemy => enemy.Position += offset * _currentSpeed);
+            DoWithEach(enemy => enemy.Position += offset / MoveStepDivider);
         }
 
         private void HandleScreenCollisions()

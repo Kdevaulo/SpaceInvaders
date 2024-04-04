@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Kdevaulo.SpaceInvaders.LevelSystem;
+
 using UniRx;
 using UniRx.Triggers;
 
@@ -12,8 +14,13 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 {
     public sealed class BulletService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
+        private const float MoveStepDivider = 10;
+
         [Inject]
         private BulletPool _bulletPool;
+
+        [Inject]
+        private LevelSettings _levelSettings;
 
         [Inject]
         private ScreenUtilities _screenUtilities;
@@ -25,14 +32,19 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         private Dictionary<BulletModel, IDisposable> _disposableByModel = new Dictionary<BulletModel, IDisposable>();
 
+        private float _moveDelay;
+        private float _timeCounter;
+
         private bool _isPaused;
+
         private Rect _screenRect;
 
-        public void AddBullet(Vector2 direction, float speed, Vector2 startPosition, string shooterTag, string bulletTag)
+        public void AddBullet(Vector2 direction, Vector2 startPosition, string shooterTag,
+            string bulletTag)
         {
             var view = _bulletPool.GetPooledObject();
             view.tag = bulletTag;
-            var model = new BulletModel(view, direction, speed, startPosition);
+            var model = new BulletModel(view, direction, startPosition);
             _activeBullets.Add(model);
 
             var disposable = view.Collider.OnTriggerEnter2DAsObservable()
@@ -45,25 +57,34 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         void IInitializable.Initialize()
         {
+            _moveDelay = _levelSettings.ProjectileMoveDelay;
+            _timeCounter = _moveDelay;
             _screenRect = _screenUtilities.GetScreenRectInUnits();
         }
 
         void ITickable.Tick()
         {
-            if (_isPaused) return;
+            if (_isPaused || _activeBullets.Count == 0) return;
 
-            foreach (var bullet in _activeBullets)
+            _timeCounter -= Time.deltaTime;
+
+            if (_timeCounter <= 0)
             {
-                bullet.Position += bullet.Speed * bullet.Direction;
-                HandleScreenCollisions(bullet);
-            }
+                foreach (var bullet in _activeBullets)
+                {
+                    bullet.Position += bullet.Direction / MoveStepDivider;
+                    HandleScreenCollisions(bullet);
+                }
 
-            foreach (var bullet in _bulletsToReturn)
-            {
-                ReturnBullet(bullet);
-            }
+                foreach (var bullet in _bulletsToReturn)
+                {
+                    ReturnBullet(bullet);
+                }
 
-            _bulletsToReturn.Clear();
+                _bulletsToReturn.Clear();
+
+                _timeCounter = _moveDelay;
+            }
         }
 
         void IPauseHandler.HandlePause()

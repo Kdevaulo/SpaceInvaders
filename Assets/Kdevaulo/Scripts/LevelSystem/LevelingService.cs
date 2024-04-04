@@ -89,7 +89,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
             var playerModel = CreatePlayer(currentSettings.PlayerSettings);
 
             //todo: fix behaviour, remove peer-to-peer reference
-            _enemiesController.Initialize(enemies, currentSettings.EnemiesSpeedBounds,
+            _enemiesController.Initialize(enemies, currentSettings.EnemiesMoveDelayBounds,
                 currentSettings.EnemyMovementPattern,
                 currentSettings.VerticalStep);
 

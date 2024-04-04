@@ -23,7 +23,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         [Inject]
         private LevelingService _levelingService;
-        
+
         [Inject]
         private ScoreService _scoreService;
 
@@ -38,9 +38,8 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private bool _canMove;
 
-        private float _shootingRate;
-        private float _currentTime;
-        private float _bulletSpeed;
+        private float _shootingDelay;
+        private float _timeCounter;
 
         private Rect _screenRect;
         private Vector2 _targetPosition;
@@ -49,8 +48,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             _model = model;
 
-            _shootingRate = _model.ShootingRate;
-            _bulletSpeed = _model.BulletSpeed;
+            _shootingDelay = _model.ShootingDelay;
 
             _screenRect = _screenUtilities.GetScreenRectInUnits();
             _targetPosition = _model.Position;
@@ -115,14 +113,14 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void TryShoot()
         {
-            if (_currentTime > 0)
+            if (_timeCounter > 0)
             {
-                _currentTime -= Time.deltaTime;
+                _timeCounter -= Time.deltaTime;
             }
             else
             {
                 Shoot();
-                _currentTime = _shootingRate;
+                _timeCounter = _shootingDelay;
             }
         }
 
@@ -133,7 +131,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void Shoot()
         {
-            _bulletService.AddBullet(_model.BulletDirection, _bulletSpeed, _model.Position, _model.PlayerTag,
+            _bulletService.AddBullet(_model.BulletDirection, _model.Position, _model.PlayerTag,
                 _model.BulletTag);
         }
 
