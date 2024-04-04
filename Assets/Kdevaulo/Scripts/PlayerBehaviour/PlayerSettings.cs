@@ -18,6 +18,8 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         [Min(0.00001f)]
         public float ShootingDelay;
         [Min(0.00001f)]
-        public float MovementSpeed;
+        public float MovementSmoothness;
+        [Min(0.00001f)]
+        public float MovementDelay;
     }
 }

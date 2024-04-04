@@ -46,7 +46,8 @@ MonoBehaviour:
     BulletTag: PlayerBullet
     VulnerableProjectileTag: Enemy
     ShootingDelay: 0.75
-    MovementSpeed: 0.01
+    MovementSmoothness: 0.1
+    MovementDelay: 0.01
   <EnemiesSettings>k__BackingField:
   - Name: 0
     View: {fileID: 623193015061781414, guid: df0e68b348934204aa5c173e54a85645, type: 3}

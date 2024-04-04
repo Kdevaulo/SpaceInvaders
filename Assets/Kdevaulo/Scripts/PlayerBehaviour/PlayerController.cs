@@ -31,15 +31,17 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         private ScreenUtilities _screenUtilities;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
+
         private PlayerModel _model;
 
+        private bool _canMove;
         private bool _isPaused;
         private bool _isInitialized;
 
-        private bool _canMove;
-
         private float _shootingDelay;
-        private float _timeCounter;
+        private float _shootTimeCounter;
+        private float _movingDelay;
+        private float _moveTimeCounter;
 
         private Rect _screenRect;
         private Vector2 _targetPosition;
@@ -48,10 +50,11 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             _model = model;
 
+            _targetPosition = _model.Position;
+            _movingDelay = _model.MovementDelay;
             _shootingDelay = _model.ShootingDelay;
 
             _screenRect = _screenUtilities.GetScreenRectInUnits();
-            _targetPosition = _model.Position;
 
             _model.View.Collider.OnTriggerEnter2DAsObservable()
                 .Where(x => x.CompareTag(_model.VulnerableProjectileTag))
@@ -113,20 +116,24 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void TryShoot()
         {
-            if (_timeCounter > 0)
-            {
-                _timeCounter -= Time.deltaTime;
-            }
-            else
+            _shootTimeCounter -= Time.deltaTime;
+
+            if (_shootTimeCounter <= 0)
             {
                 Shoot();
-                _timeCounter = _shootingDelay;
+                _shootTimeCounter = _shootingDelay;
             }
         }
 
         private void TryMove()
         {
-            _model.Position = Vector2.Lerp(_model.Position, _targetPosition, _model.MovementSpeed);
+            _moveTimeCounter -= Time.deltaTime;
+
+            if (_moveTimeCounter <= 0)
+            {
+                _model.Position = Vector2.Lerp(_model.Position, _targetPosition, _model.MovementSmoothness);
+                _moveTimeCounter = _movingDelay;
+            }
         }
 
         private void Shoot()

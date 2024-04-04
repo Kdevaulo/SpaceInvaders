@@ -21,8 +21,9 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         public readonly string BulletTag;
 
         public readonly float ShootingDelay;
-        public readonly float MovementSpeed;
+        public readonly float MovementDelay;
         public readonly float HalfVerticalSize;
+        public readonly float MovementSmoothness;
         public readonly float HalfHorizontalSize;
 
         public readonly Vector2 BulletDirection;
@@ -34,8 +35,9 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             View = view;
             Position = settings.StartPosition;
             ShootingDelay = settings.ShootingDelay;
-            MovementSpeed = settings.MovementSpeed;
+            MovementDelay = settings.MovementDelay;
             BulletDirection = settings.BulletDirection;
+            MovementSmoothness = settings.MovementSmoothness;
             VulnerableProjectileTag = settings.VulnerableProjectileTag;
 
             HalfVerticalSize = View.VerticalSize / 2;

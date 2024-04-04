@@ -21,6 +21,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         public readonly Enemy Name;
 
         public readonly int RewardPoints;
+
         public readonly string VulnerableProjectileTag;
 
         private readonly float HalfHorizontalSize;
