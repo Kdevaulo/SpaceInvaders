@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 9dd2110435ad1f742be8cbff0367ca2a, type: 3}
+    - {fileID: 2800000, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+    - {fileID: 2800000, guid: 425b90fa9d6650c4d9f5b2a562a2b901, type: 3}
+    - {fileID: 2800000, guid: 1ad84689c28f9844ba33939bf77f9fbe, type: 3}
+    - {fileID: 2800000, guid: 5ae27272ceddbee4aa916d66f634d4d1, type: 3}
+    - {fileID: 2800000, guid: 48ca6b2d20bff1a42b6b2a374ad93d22, type: 3}
+    - {fileID: 2800000, guid: 6daa5e3ce0d2c1e478154620ea99c4ef, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5ae27272ceddbee4aa916d66f634d4d1, type: 3}
+  - {fileID: -340943974, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: -213144950, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: 162338373, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: 1140307805, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: -2006768159, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: -1713562857, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: -1898490910, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: -328955314, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: 451554196, guid: 4ea07593c2ad1254595afaf0b9ed278b, type: 3}
+  - {fileID: 21300000, guid: 9dd2110435ad1f742be8cbff0367ca2a, type: 3}
+  - {fileID: 21300000, guid: 1ad84689c28f9844ba33939bf77f9fbe, type: 3}
+  - {fileID: 21300000, guid: 425b90fa9d6650c4d9f5b2a562a2b901, type: 3}
+  - {fileID: 21300000, guid: 6daa5e3ce0d2c1e478154620ea99c4ef, type: 3}
+  - {fileID: 21300000, guid: 48ca6b2d20bff1a42b6b2a374ad93d22, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Ammo 1
+  - SpaceInvader_3
+  - SpaceInvader_2
+  - SpaceInvader_1
+  - SpaceInvader_0
+  - SpaceInvader_7
+  - SpaceInvader_6
+  - SpaceInvader_5
+  - SpaceInvader_4
+  - SpaceInvader_8
+  - UIPanel
+  - Ammo 2
+  - Ammo 3
+  - SafeZoneBackground
+  - MenuButton
+  m_RenderDataMap: {}
+  m_Tag: Atlas
+  m_IsVariant: 0
