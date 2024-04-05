@@ -16,6 +16,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             }
         }
 
+        public Vector2Int Index { get; set; }
+
         public readonly MovingItemView View;
         public readonly DropItem DropType;
         public readonly Enemy Name;

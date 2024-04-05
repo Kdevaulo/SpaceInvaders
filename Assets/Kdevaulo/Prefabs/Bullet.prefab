@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522217602194945574, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Name
-      value: PlayerBullet
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 8379424894728992584, guid: 7c7084cefb209994693f36795374dbb9, type: 3}
       propertyPath: m_Size.x

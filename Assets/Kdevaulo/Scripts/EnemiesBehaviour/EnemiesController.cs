@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
@@ -13,6 +14,7 @@ using UnityEngine;
 using Zenject;
 
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
@@ -29,35 +31,46 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         [Inject]
         private ScoreService _scoreService;
 
+        [Inject]
+        private BulletService _bulletService;
+
+        private EnemyModel[,] _enemiesArray;
         private List<EnemyModel> _enemies = new List<EnemyModel>();
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
-        private bool _isLeftDirection;
         private bool _isPaused;
         private bool _isInitialized;
+        private bool _isLeftDirection;
 
         private int _maxEnemies;
 
-        private float _currentMoveDelay;
         private float _verticalStep;
+        private float _shootDelay;
         private float _moveTimeCounter;
+        private float _shootTimeCounter;
+        private float _currentMoveDelay;
 
         private Vector2 _moveDelayBounds;
+        private Vector2 _bulletDirection;
 
         private AnimationCurve _speedFunction;
 
         private Rect _screenRect;
 
-        public void Initialize(List<EnemyModel> enemies, Vector2 moveDelayBounds, AnimationCurve speedFunction,
-            float verticalStep)
+        public void Initialize(List<EnemyModel> enemies, EnemyModel[,] enemiesArray, Vector2 moveDelayBounds,
+            AnimationCurve speedFunction, float verticalStep, float shootDelay, Vector2 bulletDirection)
         {
             _enemies = enemies;
-            _moveDelayBounds = moveDelayBounds;
-            _speedFunction = speedFunction;
+            _shootDelay = shootDelay;
+            _enemiesArray = enemiesArray;
             _verticalStep = verticalStep;
+            _speedFunction = speedFunction;
+            _moveDelayBounds = moveDelayBounds;
+            _bulletDirection = bulletDirection;
+            _currentMoveDelay = moveDelayBounds.x;
 
-            _currentMoveDelay = _moveDelayBounds.x;
+            _shootTimeCounter = _shootDelay;
             _moveTimeCounter = _currentMoveDelay;
 
             _maxEnemies = _enemies.Count;
@@ -114,6 +127,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             }
 
             _moveTimeCounter -= Time.deltaTime;
+            _shootTimeCounter -= Time.deltaTime;
 
             if (_moveTimeCounter <= 0)
             {
@@ -121,12 +135,20 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 HandleScreenCollisions();
                 _moveTimeCounter = _currentMoveDelay;
             }
+
+            if (_shootTimeCounter <= 0)
+            {
+                Shoot();
+                _shootTimeCounter = _shootDelay;
+            }
         }
 
         private void HandleKilledEvent(EnemyModel model)
         {
             Object.Destroy(model.View.gameObject);
             _enemies.Remove(model);
+
+            _enemiesArray[model.Index.x, model.Index.y] = null;
 
             if (_enemies.Count > 0)
             {
@@ -179,6 +201,34 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             {
                 action.Invoke(enemy);
             }
+        }
+
+        private void Shoot()
+        {
+            int rows = _enemiesArray.GetLength(0);
+            int columns = _enemiesArray.GetLength(1);
+
+            var shooters = new List<EnemyModel>();
+
+            for (int column = 0; column < columns; column++)
+            {
+                for (int row = 0; row < rows; row++)
+                {
+                    var enemy = _enemiesArray[row, column];
+
+                    if (enemy != null)
+                    {
+                        shooters.Add(enemy);
+                        break;
+                    }
+                }
+            }
+
+            int enemyIndex = Random.Range(0, shooters.Count);
+            var startPosition = shooters[enemyIndex].Position;
+            string shooterTag = "Enemy"; //todo: get shooter tag
+
+            _bulletService.AddBullet(_bulletDirection, startPosition, shooterTag, shooterTag);
         }
     }
 }

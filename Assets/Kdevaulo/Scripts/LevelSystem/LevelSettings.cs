@@ -13,11 +13,15 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         [field: SerializeField] public float VerticalStep { get; private set; }
         [field: Min(0.00001f)]
         [field: SerializeField] public float ProjectileMoveDelay { get; private set; }
+        [field: SerializeField] public float EnemyShootDelay { get; private set; }
+        [field: SerializeField] public Vector2 EnemiesBulletDirection { get; private set; }
         [field: SerializeField] public Vector2 EnemiesMoveDelayBounds { get; private set; }
 
         [field: SerializeField] public AnimationCurve EnemyMovementPattern { get; private set; }
 
         [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
+
+        [field: SerializeField] public int ColumnsCount { get; private set; }
         [field: SerializeField] public EnemySettings[] EnemiesSettings { get; private set; }
     }
 }

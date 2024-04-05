@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
 using Kdevaulo.SpaceInvaders.PlayerBehaviour;
@@ -7,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 using Zenject;
+
+using Object = UnityEngine.Object;
 
 namespace Kdevaulo.SpaceInvaders.LevelSystem
 {
@@ -84,17 +87,47 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
                 }
             }
 
+            var enemyArray = GetValue(enemies, currentSettings.ColumnsCount);
+
             PlaceEnemies(enemies);
 
             var playerModel = CreatePlayer(currentSettings.PlayerSettings);
 
             //todo: fix behaviour, remove peer-to-peer reference
-            _enemiesController.Initialize(enemies, currentSettings.EnemiesMoveDelayBounds,
-                currentSettings.EnemyMovementPattern,
-                currentSettings.VerticalStep);
+            _enemiesController.Initialize(enemies, enemyArray, currentSettings.EnemiesMoveDelayBounds,
+                currentSettings.EnemyMovementPattern, currentSettings.VerticalStep, currentSettings.EnemyShootDelay,
+                currentSettings.EnemiesBulletDirection);
 
             //todo: fix behaviour, remove peer-to-peer reference
             _playerController.Initialize(playerModel);
+        }
+
+        private EnemyModel[,] GetValue(List<EnemyModel> enemies, int columns)
+        {
+            Assert.IsTrue(columns > 0, "Enemy columns == 0");
+
+            int enemiesCount = enemies.Count;
+            int rows = (int) MathF.Ceiling(enemiesCount / (float) columns);
+            int index = 0;
+
+            var models = new EnemyModel[rows, columns];
+
+            for (int row = 0; row < rows; row++)
+            {
+                for (int column = 0; column < columns; column++)
+                {
+                    var enemyModel = enemies[index++];
+                    enemyModel.Index = new Vector2Int(row, column);
+                    models[row, column] = enemyModel;
+
+                    if (index >= enemiesCount)
+                    {
+                        return models;
+                    }
+                }
+            }
+
+            return models;
         }
 
         private PlayerModel CreatePlayer(PlayerSettings settings)
