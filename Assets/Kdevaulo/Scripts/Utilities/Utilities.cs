@@ -26,5 +26,20 @@ namespace Kdevaulo.SpaceInvaders
         {
             return tags.Any(component.CompareTag);
         }
+
+        public static bool IsOutOfBoundsHorizontal(float positionX, float halfSize, Rect rect)
+        {
+            return IsOutOfBounds(positionX, halfSize, rect.xMin, rect.xMax);
+        }
+
+        public static bool IsOutOfBoundsVertical(float positionY, float halfSize, Rect rect)
+        {
+            return IsOutOfBounds(positionY, halfSize, rect.yMin, rect.yMax);
+        }
+
+        private static bool IsOutOfBounds(float value, float halfSize, float min, float max)
+        {
+            return value - halfSize < min || value + halfSize > max;
+        }
     }
 }

@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.DropBehaviour;
-using Kdevaulo.SpaceInvaders.LevelSystem;
-using Kdevaulo.SpaceInvaders.ScoreBehaviour;
-using Kdevaulo.SpaceInvaders.ScreenBehaviour;
+using Kdevaulo.SpaceInvaders.LevelngSystem;
+using Kdevaulo.SpaceInvaders.ProjectileBehaviour;
+using Kdevaulo.SpaceInvaders.ScoreSystem;
+using Kdevaulo.SpaceInvaders.ScreenSystem;
 
 using UniRx;
 using UniRx.Triggers;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 using Zenject;
 
@@ -20,29 +21,26 @@ using Random = UnityEngine.Random;
 
 namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
-    public sealed class EnemiesController : ITickable, IPauseHandler, IDisposable, IResourceHandler
+    public sealed class EnemiesController : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
         private const float MoveStepDivider = 10;
 
-        [Inject]
-        private LevelingService _levelingService;
+        [Inject] private DropService _dropService;
+        [Inject] private ScoreService _scoreService;
+        [Inject] private ScreenService _screenService;
+        [Inject] private LevelingService _levelingService;
+        [Inject] private ProjectileService _projectileService;
 
-        [Inject]
-        private ScoreService _scoreService;
+        [Inject] private LevelingModel _levelingModel;
 
-        [Inject]
-        private BulletService _bulletService;
+        [Inject] private EnemiesFactory _factory;
+        [Inject] private PositionsProvider _positionsProvider;
 
-        [Inject]
-        private ScreenService _screenService;
-
-        [Inject]
-        private DropService _dropService;
-
+        private List<EnemyModel> _enemies;
         private EnemyModel[,] _enemiesArray;
-        private List<EnemyModel> _enemies = new List<EnemyModel>();
 
-        private CompositeDisposable _disposable = new CompositeDisposable();
+        private CompositeDisposable _eventsDisposable = new CompositeDisposable();
+        private CompositeDisposable _collisionDisposable = new CompositeDisposable();
 
         private bool _isPaused;
         private bool _isInitialized;
@@ -50,8 +48,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private int _maxEnemies;
 
-        private float _verticalStep;
         private float _shootDelay;
+        private float _verticalStep;
         private float _moveTimeCounter;
         private float _shootTimeCounter;
         private float _currentMoveDelay;
@@ -63,65 +61,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private Rect _screenRect;
 
-        public void Initialize(List<EnemyModel> enemies, EnemyModel[,] enemiesArray, Vector2 moveDelayBounds,
-            AnimationCurve speedFunction, float verticalStep, float shootDelay, Vector2 bulletDirection)
+        void IInitializable.Initialize()
         {
-            _enemies = enemies;
-            _shootDelay = shootDelay;
-            _enemiesArray = enemiesArray;
-            _verticalStep = verticalStep;
-            _speedFunction = speedFunction;
-            _moveDelayBounds = moveDelayBounds;
-            _bulletDirection = bulletDirection;
-            _currentMoveDelay = moveDelayBounds.x;
-
-            _shootTimeCounter = _shootDelay;
-            _moveTimeCounter = _currentMoveDelay;
-
-            _maxEnemies = _enemies.Count;
-            _screenRect = _screenService.GetScreenRectInUnits();
-
-            foreach (var enemy in _enemies)
-            {
-                var view = enemy.View;
-
-                view.Collider.OnTriggerEnter2DAsObservable()
-                    .Where(x => x.IfAnyTag(enemy.VulnerableObjectsTags))
-                    .Subscribe(_ => HandleKilledEvent(enemy))
-                    .AddTo(_disposable);
-            }
-
-            _isLeftDirection = false;
-            _isInitialized = true;
-        }
-
-        void IResourceHandler.Release()
-        {
-            foreach (var enemy in _enemies)
-            {
-                Object.Destroy(enemy.View.gameObject);
-            }
-
-            _enemies.Clear();
-
-            _disposable.Clear();
-            _isInitialized = false;
-        }
-
-        void IDisposable.Dispose()
-        {
-            _disposable.Dispose();
-            _isInitialized = false;
-        }
-
-        void IPauseHandler.HandlePause()
-        {
-            _isPaused = true;
-        }
-
-        void IPauseHandler.HandleResume()
-        {
-            _isPaused = false;
+            _levelingModel.LevelSettings.Where(x => x != null).Subscribe(_ => Prepare()).AddTo(_eventsDisposable);
         }
 
         void ITickable.Tick()
@@ -145,6 +87,101 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             {
                 Shoot();
                 _shootTimeCounter = _shootDelay;
+            }
+        }
+
+        void IPauseHandler.HandlePause()
+        {
+            _isPaused = true;
+        }
+
+        void IPauseHandler.HandleResume()
+        {
+            _isPaused = false;
+        }
+
+        void IResourceHandler.Release()
+        {
+            foreach (var enemy in _enemies)
+            {
+                Object.Destroy(enemy.View.gameObject);
+            }
+
+            _enemies.Clear();
+
+            _collisionDisposable.Clear();
+            _isInitialized = false;
+        }
+
+        void IDisposable.Dispose()
+        {
+            _eventsDisposable.Dispose();
+            _collisionDisposable.Dispose();
+            _isInitialized = false;
+        }
+
+        private void Prepare()
+        {
+            var levelSettings = _levelingModel.LevelSettings.Value;
+            InitializeFields(levelSettings);
+
+            CreateEnemies(levelSettings.EnemiesSettings, levelSettings.EnemiesColumnsCount);
+            PlaceEnemies(_enemies);
+
+            SubscribeEvents();
+
+            _isLeftDirection = false;
+            _isInitialized = true;
+        }
+
+        private void InitializeFields(LevelSettingsData levelSettings)
+        {
+            _screenRect = _screenService.GetScreenRectInUnits();
+
+            _shootDelay = levelSettings.EnemyShootDelay;
+            _verticalStep = levelSettings.EnemyVerticalStep;
+            _bulletDirection = levelSettings.EnemiesBulletDirection;
+            _moveDelayBounds = levelSettings.EnemiesMoveDelayBounds;
+            _speedFunction = levelSettings.EnemyMovementSpeedPattern;
+            _currentMoveDelay = levelSettings.EnemiesMoveDelayBounds.x;
+
+            _shootTimeCounter = _shootDelay;
+            _moveTimeCounter = _currentMoveDelay;
+        }
+
+        private void CreateEnemies(EnemySettings[] data, int columns)
+        {
+            _enemies = _factory.Create(data);
+            _maxEnemies = _enemies.Count;
+
+            _enemiesArray =
+                ArrayUtilities<EnemyModel>.PackItems(_enemies, columns, (item, index) => item.Index = index);
+        }
+
+        private void PlaceEnemies(List<EnemyModel> enemies)
+        {
+            var positions = _positionsProvider.GetPositions();
+
+            int enemiesCount = enemies.Count;
+
+            Assert.IsTrue(enemiesCount <= positions.Length, "Positions count is less than enemies count");
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Position = positions[i];
+            }
+        }
+
+        private void SubscribeEvents()
+        {
+            foreach (var enemy in _enemies)
+            {
+                var view = enemy.View;
+
+                view.Collider.OnTriggerEnter2DAsObservable()
+                    .Where(x => x.IfAnyTag(enemy.VulnerableObjectsTags))
+                    .Subscribe(_ => HandleKilledEvent(enemy))
+                    .AddTo(_collisionDisposable);
             }
         }
 
@@ -180,7 +217,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private void HandleScreenCollisions()
         {
-            bool switchDirection = _enemies.Any(enemy => enemy.IsOutOfBoundsHorizontal(_screenRect));
+            bool switchDirection = _enemies.Any(enemy =>
+                Utilities.IsOutOfBoundsHorizontal(enemy.Position.x, enemy.HalfHorizontalSize, _screenRect));
 
             if (switchDirection)
             {
@@ -188,7 +226,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 _isLeftDirection = !_isLeftDirection;
             }
 
-            bool outOfBounds = _enemies.Any(enemy => enemy.IsOutOfBoundsVertical(_screenRect));
+            bool outOfBounds = _enemies.Any(enemy =>
+                Utilities.IsOutOfBoundsVertical(enemy.Position.y, enemy.HalfVerticalSize, _screenRect));
 
             if (outOfBounds)
             {
@@ -231,12 +270,15 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 }
             }
 
-            int enemyIndex = Random.Range(0, shooters.Count);
-            var startPosition = shooters[enemyIndex].Position;
-            string shooterTag = "Enemy"; //todo: get shooter tag
-            string[] ignoreTags = { "Enemy", "Drop" }; //todo: SetIgnoreTags
+            if (shooters.Count > 0)
+            {
+                int enemyIndex = Random.Range(0, shooters.Count);
+                var startPosition = shooters[enemyIndex].Position;
+                string shooterTag = "Enemy"; //todo: get shooter tag
+                string[] ignoreTags = { "Enemy", "Drop" }; //todo: SetIgnoreTags
 
-            _bulletService.AddBullet(_bulletDirection, startPosition, ignoreTags, shooterTag);
+                _projectileService.AddBullet(_bulletDirection, startPosition, ignoreTags, shooterTag);
+            }
         }
     }
 }

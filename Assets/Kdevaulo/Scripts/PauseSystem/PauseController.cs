@@ -1,17 +1,14 @@
 ﻿using System;
 
-using Kdevaulo.SpaceInvaders.MenuBehaviour;
-
 using UniRx;
 
 using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.PauseBehaviour
+namespace Kdevaulo.SpaceInvaders.PauseSystem
 {
     public sealed class PauseController : IDisposable
     {
-        [Inject]
-        private PauseService _pauseService;
+        [Inject] private PauseService _pauseService;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 

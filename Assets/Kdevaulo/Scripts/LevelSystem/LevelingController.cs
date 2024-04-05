@@ -1,29 +1,23 @@
 ﻿using System;
 
-using Kdevaulo.SpaceInvaders.MenuBehaviour;
-using Kdevaulo.SpaceInvaders.PauseBehaviour;
-using Kdevaulo.SpaceInvaders.ScoreBehaviour;
+using Kdevaulo.SpaceInvaders.PauseSystem;
+using Kdevaulo.SpaceInvaders.ScoreSystem;
 
 using UniRx;
 
 using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.LevelSystem
+namespace Kdevaulo.SpaceInvaders.LevelngSystem
 {
-    public sealed class LevelController : IInitializable, IDisposable
+    public sealed class LevelingController : IInitializable, IDisposable
     {
-        [Inject]
-        private LevelingService _levelingService;
-
-        [Inject]
-        private ScoreService _scoreService;
-
-        [Inject]
-        private PauseService _pauseService;
+        [Inject] private ScoreService _scoreService;
+        [Inject] private PauseService _pauseService;
+        [Inject] private LevelingService _levelingService;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
-        public LevelController(PauseMenuView pauseMenu)
+        public LevelingController(PauseMenuView pauseMenu)
         {
             pauseMenu.RestartButton.OnClickAsObservable().Subscribe(_ => Restart()).AddTo(_disposable);
         }

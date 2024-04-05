@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Kdevaulo.SpaceInvaders.PauseBehaviour
+namespace Kdevaulo.SpaceInvaders.PauseSystem
 {
-    [AddComponentMenu(nameof(PauseView) + " in " + nameof(PauseBehaviour))]
+    [AddComponentMenu(nameof(PauseView) + " in " + nameof(PauseSystem))]
     public sealed class PauseView : MonoBehaviour
     {
         [field: Header("References")]

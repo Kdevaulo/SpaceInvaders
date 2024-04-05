@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
-using Kdevaulo.SpaceInvaders.ScreenBehaviour;
+using Kdevaulo.SpaceInvaders.ScreenSystem;
 
 using UniRx;
 using UniRx.Triggers;
@@ -11,30 +10,27 @@ using UnityEngine;
 
 using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.BulletBehaviour
+namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 {
-    public sealed class BulletService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
+    public sealed class ProjectileService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
-        private const float MoveStepDivider = 10;
+        [Inject] private ScreenService _screenService;
 
-        [Inject]
-        private ScreenService _screenService;
+        [Inject] private ProjectilePool _projectilePool;
 
-        [Inject]
-        private BulletPool _bulletPool;
-
-        [Inject]
-        private BulletSettingsData _bulletSettingsData;
+        [Inject] private ProjectileSettingsData _bulletSettingsData;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
-        private List<BulletModel> _activeBullets = new List<BulletModel>();
-        private List<BulletModel> _bulletsToReturn = new List<BulletModel>();
+        private List<ProjectileModel> _activeBullets = new List<ProjectileModel>();
+        private List<ProjectileModel> _bulletsToReturn = new List<ProjectileModel>();
 
-        private Dictionary<BulletModel, IDisposable> _disposableByModel = new Dictionary<BulletModel, IDisposable>();
+        private Dictionary<ProjectileModel, IDisposable> _disposableByModel =
+            new Dictionary<ProjectileModel, IDisposable>();
 
         private float _moveDelay;
         private float _timeCounter;
+        private float _moveStepDivider;
 
         private bool _isPaused;
 
@@ -42,24 +38,27 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         public void AddBullet(Vector2 direction, Vector2 startPosition, string[] ignoreTags, string bulletTag)
         {
-            var view = _bulletPool.GetPooledObject();
+            var view = _projectilePool.GetPooledObject();
+            var model = new ProjectileModel(view, direction, startPosition);
+
             view.tag = bulletTag;
-            var model = new BulletModel(view, direction, startPosition);
-            _activeBullets.Add(model);
 
             var disposable = view.Collider.OnTriggerEnter2DAsObservable()
-                .Where(x => !IfAnyTag(x, ignoreTags))
+                .Where(x => !x.IfAnyTag(ignoreTags))
                 .Subscribe(_ => ReturnBullet(model))
                 .AddTo(_disposable);
 
+            _activeBullets.Add(model);
             _disposableByModel.Add(model, disposable);
         }
 
         void IInitializable.Initialize()
         {
-            _moveDelay = _bulletSettingsData.ProjectileMoveDelay;
-            _timeCounter = _moveDelay;
+            _moveDelay = _bulletSettingsData.MoveDelay;
             _screenRect = _screenService.GetScreenRectInUnits();
+            _moveStepDivider = _bulletSettingsData.MoveStepDivider;
+
+            _timeCounter = _moveDelay;
         }
 
         void ITickable.Tick()
@@ -72,7 +71,7 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
             {
                 foreach (var bullet in _activeBullets)
                 {
-                    bullet.Position += bullet.Direction / MoveStepDivider;
+                    bullet.Position += bullet.Direction / _moveStepDivider;
                     HandleScreenCollisions(bullet);
                 }
 
@@ -116,31 +115,28 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
                 ReturnBullet(bullet);
             }
 
+            _disposable.Clear();
             _activeBullets.Clear();
             _bulletsToReturn.Clear();
-            _disposable.Clear();
         }
 
-        private void HandleScreenCollisions(BulletModel model)
+        private void HandleScreenCollisions(ProjectileModel model)
         {
-            if (model.IsOutOfBoundsVertical(_screenRect) || model.IsOutOfBoundsHorizontal(_screenRect))
+            bool isOutOfBounds = Utilities.IsOutOfBoundsVertical(model.Position.y, model.HalfVerticalSize, _screenRect);
+
+            if (isOutOfBounds)
             {
                 _bulletsToReturn.Add(model);
             }
         }
 
-        private void ReturnBullet(BulletModel model)
+        private void ReturnBullet(ProjectileModel model)
         {
-            _bulletPool.ReturnToPool(model.View);
+            _projectilePool.ReturnToPool(model.View);
             _activeBullets.Remove(model);
 
             _disposableByModel[model].Dispose();
             _disposableByModel.Remove(model);
-        }
-
-        private bool IfAnyTag(Collider2D collider, string[] values)
-        {
-            return values.Any(collider.CompareTag);
         }
     }
 }

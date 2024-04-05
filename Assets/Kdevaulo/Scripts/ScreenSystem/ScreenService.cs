@@ -3,18 +3,15 @@ using UnityEngine.UI;
 
 using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.ScreenBehaviour
+namespace Kdevaulo.SpaceInvaders.ScreenSystem
 {
     public sealed class ScreenService : IInitializable
     {
-        [Inject]
-        private Camera _camera;
+        [Inject] private Camera _camera;
 
-        [Inject]
-        private RectTransform _safeZone;
+        [Inject] private RectTransform _safeZone;
 
-        [Inject]
-        private CanvasScaler _canvasScaler;
+        [Inject] private CanvasScaler _canvasScaler;
 
         private Rect _screenRect;
 

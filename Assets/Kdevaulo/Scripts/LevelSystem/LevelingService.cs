@@ -1,39 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
-using Kdevaulo.SpaceInvaders.PlayerBehaviour;
-
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 using Zenject;
 
-using Object = UnityEngine.Object;
-
-namespace Kdevaulo.SpaceInvaders.LevelSystem
+namespace Kdevaulo.SpaceInvaders.LevelngSystem
 {
     public sealed class LevelingService
     {
-        [Inject]
-        private IResourceHandler[] _resourceHandlers;
+        [Inject] private LevelSettingsData[] _levelSettings;
 
-        [Inject]
-        private LevelSettingsData[] _levelSettings;
-        [Inject]
-        private PlayerSettingsData _playerSettings;
-
-        [Inject]
-        private EnemiesFactory _enemiesFactory;
-
-        [Inject]
-        private EnemiesController _enemiesController;
-
-        [Inject]
-        private PlayerController _playerController;
-
-        [Inject]
-        private PositionsProvider _positionsProvider;
+        [Inject] private LevelingModel _levelingModel;
 
         private int _currentLevel;
 
@@ -63,10 +38,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         public void ClearLevel()
         {
-            foreach (var handler in _resourceHandlers)
-            {
-                handler.Release();
-            }
+            _levelingModel.ClearLevel.Execute();
         }
 
         private void InitializeLevel(int levelIndex)
@@ -75,82 +47,9 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
             int settingsIndex = levelIndex % _levelSettings.Length;
             var currentSettings = _levelSettings[settingsIndex];
-            var enemiesSettings = currentSettings.EnemiesSettings;
 
-            var enemies = new List<EnemyModel>();
-
-            foreach (var settings in enemiesSettings)
-            {
-                for (int i = 0; i < settings.Count; i++)
-                {
-                    var model = _enemiesFactory.Create(settings);
-                    enemies.Add(model);
-                }
-            }
-
-            var enemyArray = GetValue(enemies, currentSettings.EnemiesColumnsCount);
-
-            PlaceEnemies(enemies);
-
-            var playerModel = CreatePlayer(_playerSettings);
-
-            //todo: fix behaviour, remove peer-to-peer reference
-            _enemiesController.Initialize(enemies, enemyArray, currentSettings.EnemiesMoveDelayBounds,
-                currentSettings.EnemyMovementSpeedPattern, currentSettings.EnemyVerticalStep,
-                currentSettings.EnemyShootDelay,
-                currentSettings.EnemiesBulletDirection);
-
-            //todo: fix behaviour, remove peer-to-peer reference
-            _playerController.Initialize(playerModel);
-        }
-
-        private EnemyModel[,] GetValue(List<EnemyModel> enemies, int columns)
-        {
-            Assert.IsTrue(columns > 0, "Enemy columns == 0");
-
-            int enemiesCount = enemies.Count;
-            int rows = (int) MathF.Ceiling(enemiesCount / (float) columns);
-            int index = 0;
-
-            var models = new EnemyModel[rows, columns];
-
-            for (int row = 0; row < rows; row++)
-            {
-                for (int column = 0; column < columns; column++)
-                {
-                    var enemyModel = enemies[index++];
-                    enemyModel.Index = new Vector2Int(row, column);
-                    models[row, column] = enemyModel;
-
-                    if (index >= enemiesCount)
-                    {
-                        return models;
-                    }
-                }
-            }
-
-            return models;
-        }
-
-        private PlayerModel CreatePlayer(PlayerSettingsData settings)
-        {
-            var view = Object.Instantiate(settings.View);
-            var model = new PlayerModel(view, settings);
-            return model;
-        }
-
-        private void PlaceEnemies(List<EnemyModel> enemies)
-        {
-            var positions = _positionsProvider.GetPositions();
-
-            int enemiesCount = enemies.Count;
-
-            Assert.IsTrue(enemiesCount <= positions.Length, "Positions count is less than enemies count");
-
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                enemies[i].Position = positions[i];
-            }
+            // note: I force a notification, as setting the same value does not notify subscribers
+            _levelingModel.LevelSettings.SetValueAndForceNotify(currentSettings);
         }
     }
 }

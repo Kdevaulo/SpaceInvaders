@@ -1,12 +1,12 @@
-using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.DropBehaviour;
 using Kdevaulo.SpaceInvaders.EnemiesBehaviour;
-using Kdevaulo.SpaceInvaders.LevelSystem;
-using Kdevaulo.SpaceInvaders.MenuBehaviour;
-using Kdevaulo.SpaceInvaders.PauseBehaviour;
+using Kdevaulo.SpaceInvaders.LevelngSystem;
+using Kdevaulo.SpaceInvaders.PauseSystem;
 using Kdevaulo.SpaceInvaders.PlayerBehaviour;
-using Kdevaulo.SpaceInvaders.ScoreBehaviour;
-using Kdevaulo.SpaceInvaders.ScreenBehaviour;
+using Kdevaulo.SpaceInvaders.ProjectileBehaviour;
+using Kdevaulo.SpaceInvaders.ResourceSystem;
+using Kdevaulo.SpaceInvaders.ScoreSystem;
+using Kdevaulo.SpaceInvaders.ScreenSystem;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,13 +20,13 @@ namespace Kdevaulo.SpaceInvaders.Installers
         [SerializeField] private Camera _camera;
         [SerializeField] private RectTransform _safeZone;
         [SerializeField] private CanvasScaler _canvasScaler;
+        [SerializeField] private MovingItemView _bulletView;
+
+        [SerializeField] private PositionsProvider _positionsProvider;
 
         [SerializeField] private ScoreView _scoreView;
         [SerializeField] private PauseView _pauseView;
-        [SerializeField] private MovingItemView _bulletView;
         [SerializeField] private PauseMenuView _pauseMenuView;
-
-        [SerializeField] private PositionsProvider _positionsProvider;
 
         public override void InstallBindings()
         {
@@ -39,21 +39,23 @@ namespace Kdevaulo.SpaceInvaders.Installers
             Container.Bind<MovingItemView>().FromInstance(_bulletView);
             Container.Bind<PauseMenuView>().FromInstance(_pauseMenuView);
 
+            Container.Bind<LevelingModel>().AsSingle();
             Container.Bind<EnemiesFactory>().AsSingle();
             Container.Bind<PositionsProvider>().FromInstance(_positionsProvider);
-            Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectilePool>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ResourceManger>().AsSingle();
 
             Container.Bind<PauseService>().AsSingle();
             Container.Bind<ScoreService>().AsSingle();
             Container.Bind<LevelingService>().AsSingle();
             Container.BindInterfacesAndSelfTo<DropService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<BulletService>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScreenService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectileService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LevelController>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemiesController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelingController>().AsSingle();
         }
     }
 }

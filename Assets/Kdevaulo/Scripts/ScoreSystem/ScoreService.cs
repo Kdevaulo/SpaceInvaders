@@ -1,11 +1,10 @@
 ﻿using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.ScoreBehaviour
+namespace Kdevaulo.SpaceInvaders.ScoreSystem
 {
     public sealed class ScoreService
     {
-        [Inject]
-        private ScoreView _scoreView;
+        [Inject] private ScoreView _scoreView;
 
         private int _currentScore;
 

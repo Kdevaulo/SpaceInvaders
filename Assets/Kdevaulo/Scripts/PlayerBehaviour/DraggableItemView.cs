@@ -1,17 +1,19 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using UniRx;
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 {
+    [AddComponentMenu(nameof(DraggableItemView) + " in " + nameof(PlayerBehaviour))]
     public sealed class DraggableItemView : MovingItemView, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         [field: SerializeField] public float VerticalSize { get; private set; }
         [field: SerializeField] public float HorizontalSize { get; private set; }
 
-        public UnityEvent<PointerEventData> OnBeginDrag = new UnityEvent<PointerEventData>();
-        public UnityEvent<PointerEventData> OnDrag = new UnityEvent<PointerEventData>();
-        public UnityEvent<PointerEventData> OnEndDrag = new UnityEvent<PointerEventData>();
+        public ReactiveCommand<PointerEventData> OnDrag = new ReactiveCommand<PointerEventData>();
+        public ReactiveCommand<PointerEventData> OnEndDrag = new ReactiveCommand<PointerEventData>();
+        public ReactiveCommand<PointerEventData> OnBeginDrag = new ReactiveCommand<PointerEventData>();
 
         private void OnDrawGizmos()
         {
@@ -21,17 +23,17 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
-            OnBeginDrag.Invoke(eventData);
+            OnBeginDrag.Execute(eventData);
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
-            OnDrag.Invoke(eventData);
+            OnDrag.Execute(eventData);
         }
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
-            OnEndDrag.Invoke(eventData);
+            OnEndDrag.Execute(eventData);
         }
     }
 }

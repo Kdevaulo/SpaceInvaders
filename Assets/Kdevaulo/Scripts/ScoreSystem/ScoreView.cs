@@ -2,9 +2,9 @@
 
 using UnityEngine;
 
-namespace Kdevaulo.SpaceInvaders.ScoreBehaviour
+namespace Kdevaulo.SpaceInvaders.ScoreSystem
 {
-    [AddComponentMenu(nameof(ScoreView) + " in " + nameof(ScoreBehaviour))]
+    [AddComponentMenu(nameof(ScoreView) + " in " + nameof(ScoreSystem))]
     public sealed class ScoreView : MonoBehaviour
     {
         [Header("References")]

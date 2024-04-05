@@ -4,12 +4,11 @@ using UnityEngine;
 
 using Zenject;
 
-namespace Kdevaulo.SpaceInvaders.BulletBehaviour
+namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 {
-    public sealed class BulletPool : IInitializable, IResourceHandler
+    public sealed class ProjectilePool : IInitializable, IResourceHandler
     {
-        [Inject]
-        private MovingItemView _objectToPool;
+        [Inject] private MovingItemView _objectToPool;
 
         private Stack<MovingItemView> _stack;
 

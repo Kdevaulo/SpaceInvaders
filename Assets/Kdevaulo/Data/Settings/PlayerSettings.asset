@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   <ShootingDelay>k__BackingField: 0.75
-  <MovementSmoothness>k__BackingField: 0.2
   <MovementDelay>k__BackingField: 0.01
+  <MovementSmoothness>k__BackingField: 0.2
   <StartPosition>k__BackingField: {x: 0, y: -6.5}
   <BulletDirection>k__BackingField: {x: 0, y: 1}
   <BulletTag>k__BackingField: PlayerBullet

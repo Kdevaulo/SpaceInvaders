@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Kdevaulo.SpaceInvaders.LevelSystem
+namespace Kdevaulo.SpaceInvaders.LevelngSystem
 {
-    [AddComponentMenu(nameof(PositionsProvider) + " in " + nameof(LevelSystem))]
+    [AddComponentMenu(nameof(PositionsProvider) + " in " + nameof(LevelngSystem))]
     public sealed class PositionsProvider : MonoBehaviour
     {
         [Header("References")]

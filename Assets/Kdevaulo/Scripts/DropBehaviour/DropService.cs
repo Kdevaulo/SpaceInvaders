@@ -10,8 +10,7 @@ namespace Kdevaulo.SpaceInvaders.DropBehaviour
 {
     public sealed class DropService : IResourceHandler
     {
-        [Inject]
-        private DropSettingsData _dropSettings;
+        [Inject] private DropSettingsData _dropSettings;
 
         private List<DropView> _instantiatedDrops = new List<DropView>();
 
