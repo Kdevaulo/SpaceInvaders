@@ -862,7 +862,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &722206440
 RectTransform:
@@ -1752,14 +1752,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 310772ad6cef49644bcdd343f0d22792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 963194227}
   _safeZone: {fileID: 2099540892}
   _canvasScaler: {fileID: 1931037986}
-  _camera: {fileID: 963194227}
   _scoreView: {fileID: 450324139}
   _pauseView: {fileID: 450324140}
-  _pauseMenuView: {fileID: 1930654427}
   _bulletView: {fileID: 5833327632413797167, guid: 4dc4483da0f182b4a95658ec453b3e1a, type: 3}
+  _pauseMenuView: {fileID: 1930654427}
   _positionsProvider: {fileID: 1033711605}
+  _dropSettings: {fileID: 11400000, guid: e43d073ccf23b044a8b8b161494887bc, type: 2}
   _levelSettings: {fileID: 11400000, guid: 128357fe5385f4146ae57a107bb9aecb, type: 2}
 --- !u!1 &1162835034
 GameObject:

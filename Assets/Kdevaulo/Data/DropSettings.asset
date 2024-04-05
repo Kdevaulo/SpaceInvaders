@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c50530f4ca249048625a38ef3588848, type: 3}
+  m_Name: DropSettings
+  m_EditorClassIdentifier: 
+  <Drops>k__BackingField:
+  - DropType: 0
+    View: {fileID: 5354379506874496258, guid: 41db28569268b84498fe03e4625e3a49, type: 3}
+  - DropType: 1
+    View: {fileID: 5354379506874496258, guid: 0bb00b64049bb554da0cf1cdf2d992ae, type: 3}
+  - DropType: 2
+    View: {fileID: 5354379506874496258, guid: a85e096708b9fcb4abc16f8efa20f0e3, type: 3}

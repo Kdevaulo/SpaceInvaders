@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Kdevaulo.SpaceInvaders.BulletBehaviour;
+using Kdevaulo.SpaceInvaders.DropBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
 
@@ -33,6 +34,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         [Inject]
         private BulletService _bulletService;
+
+        [Inject]
+        private DropService _dropService;
 
         private EnemyModel[,] _enemiesArray;
         private List<EnemyModel> _enemies = new List<EnemyModel>();
@@ -150,6 +154,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
             _enemiesArray[model.Index.x, model.Index.y] = null;
 
+            _dropService.Add(model.DropType, model.Position);
+
             if (_enemies.Count > 0)
             {
                 float t = _speedFunction.Evaluate(1f - _enemies.Count / (float) _maxEnemies);
@@ -227,8 +233,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             int enemyIndex = Random.Range(0, shooters.Count);
             var startPosition = shooters[enemyIndex].Position;
             string shooterTag = "Enemy"; //todo: get shooter tag
+            string[] ignoreTags = { "Enemy", "Drop" }; //todo: SetIgnoreTags
 
-            _bulletService.AddBullet(_bulletDirection, startPosition, shooterTag, shooterTag);
+            _bulletService.AddBullet(_bulletDirection, startPosition, ignoreTags, shooterTag);
         }
     }
 }

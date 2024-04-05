@@ -1,9 +1,13 @@
-﻿namespace Kdevaulo.SpaceInvaders.DropBehaviour
+﻿using System;
+
+using UnityEngine;
+
+namespace Kdevaulo.SpaceInvaders.DropBehaviour
 {
-    public enum DropItem
+    [Serializable]
+    public sealed class DropItem
     {
-        Ammo1,
-        Ammo2,
-        Ammo3
+        [field: SerializeField] public Drop DropType;
+        [field: SerializeField] public DropView View;
     }
 }

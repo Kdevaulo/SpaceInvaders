@@ -8,7 +8,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
     public sealed class EnemySettings
     {
         public Enemy Name;
-        public DropItem DropType;
+        public Drop DropType;
         public MovingItemView View;
 
         public int Count;

@@ -138,7 +138,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void Shoot()
         {
-            _bulletService.AddBullet(_model.BulletDirection, _model.Position, _model.PlayerTag,
+            _bulletService.AddBullet(_model.BulletDirection, _model.Position, new string[] { _model.PlayerTag, "Drop" },
                 _model.BulletTag);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Kdevaulo.SpaceInvaders.LevelSystem;
 
@@ -39,8 +40,7 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         private Rect _screenRect;
 
-        public void AddBullet(Vector2 direction, Vector2 startPosition, string shooterTag,
-            string bulletTag)
+        public void AddBullet(Vector2 direction, Vector2 startPosition, string[] ignoreTags, string bulletTag)
         {
             var view = _bulletPool.GetPooledObject();
             view.tag = bulletTag;
@@ -48,8 +48,8 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
             _activeBullets.Add(model);
 
             var disposable = view.Collider.OnTriggerEnter2DAsObservable()
-                .Where(x => !x.CompareTag(shooterTag))
-                .Subscribe(_ => { ReturnBullet(model); })
+                .Where(x => !IfAnyTag(x, ignoreTags))
+                .Subscribe(_ => ReturnBullet(model))
                 .AddTo(_disposable);
 
             _disposableByModel.Add(model, disposable);
@@ -136,6 +136,11 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
             _disposableByModel[model].Dispose();
             _disposableByModel.Remove(model);
+        }
+
+        private bool IfAnyTag(Collider2D collider, string[] values)
+        {
+            return values.Any(collider.CompareTag);
         }
     }
 }
