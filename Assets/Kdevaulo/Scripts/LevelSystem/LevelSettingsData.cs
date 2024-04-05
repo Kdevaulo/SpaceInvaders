@@ -15,10 +15,14 @@ namespace Kdevaulo.SpaceInvaders.LevelngSystem
 
         [field: SerializeField] public int EnemiesColumnsCount { get; private set; }
 
+        [field: SerializeField] public string EnemyProjectileTag { get; private set; }
+
         [field: SerializeField] public Vector2 EnemiesBulletDirection { get; private set; }
         [field: SerializeField] public Vector2 EnemiesMoveDelayBounds { get; private set; }
 
         [field: SerializeField] public AnimationCurve EnemyMovementSpeedPattern { get; private set; }
+
+        [field: SerializeField] public string[] EnemyBulletIgnoreTags { get; private set; }
 
         [field: SerializeField] public EnemySettings[] EnemiesSettings { get; private set; }
     }

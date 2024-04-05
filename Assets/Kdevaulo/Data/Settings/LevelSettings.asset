@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnemyVerticalStep>k__BackingField: -1
   <EnemyShootDelay>k__BackingField: 1.5
+  <EnemiesColumnsCount>k__BackingField: 7
+  <EnemyProjectileTag>k__BackingField: EnemyBullet
   <EnemiesBulletDirection>k__BackingField: {x: 0, y: -1}
   <EnemiesMoveDelayBounds>k__BackingField: {x: 0.5, y: 0.005}
   <EnemyMovementSpeedPattern>k__BackingField:
@@ -40,7 +42,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <EnemiesColumnsCount>k__BackingField: 7
+  <EnemyBulletIgnoreTags>k__BackingField:
+  - EnemyBullet
+  - Enemy
+  - Drop
   <EnemiesSettings>k__BackingField:
   - Name: 0
     DropType: 0

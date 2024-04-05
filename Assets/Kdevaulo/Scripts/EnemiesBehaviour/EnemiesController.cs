@@ -42,6 +42,8 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private CompositeDisposable _eventsDisposable = new CompositeDisposable();
         private CompositeDisposable _collisionDisposable = new CompositeDisposable();
 
+        private LevelSettingsData _levelSettings;
+
         private bool _isPaused;
         private bool _isInitialized;
         private bool _isLeftDirection;
@@ -122,10 +124,10 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         private void Prepare()
         {
-            var levelSettings = _levelingModel.LevelSettings.Value;
-            InitializeFields(levelSettings);
+            _levelSettings = _levelingModel.LevelSettings.Value;
+            InitializeFields(_levelSettings);
 
-            CreateEnemies(levelSettings.EnemiesSettings, levelSettings.EnemiesColumnsCount);
+            CreateEnemies(_levelSettings.EnemiesSettings, _levelSettings.EnemiesColumnsCount);
             PlaceEnemies(_enemies);
 
             SubscribeEvents();
@@ -192,7 +194,10 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
             _enemiesArray[model.Index.x, model.Index.y] = null;
 
-            _dropService.Add(model.DropType, model.Position);
+            if (Random.value > 0.3f)
+            {
+                _dropService.Add(model.DropType, model.Position);
+            }
 
             if (_enemies.Count > 0)
             {
@@ -274,10 +279,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             {
                 int enemyIndex = Random.Range(0, shooters.Count);
                 var startPosition = shooters[enemyIndex].Position;
-                string shooterTag = "Enemy"; //todo: get shooter tag
-                string[] ignoreTags = { "Enemy", "Drop" }; //todo: SetIgnoreTags
 
-                _projectileService.AddBullet(_bulletDirection, startPosition, ignoreTags, shooterTag);
+                _projectileService.AddBullet(_bulletDirection, startPosition, _levelSettings.EnemyBulletIgnoreTags,
+                    _levelSettings.EnemyProjectileTag);
             }
         }
     }

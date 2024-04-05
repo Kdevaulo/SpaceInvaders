@@ -16,7 +16,9 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         [field: SerializeField] public Vector2 StartPosition { get; private set; }
         [field: SerializeField] public Vector2 BulletDirection { get; private set; }
 
-        [field: SerializeField] public string BulletTag { get; private set; }
+        [field: SerializeField] public string ProjectileTag { get; private set; }
+
+        [field: SerializeField] public string[] ProjectileIgnoreTags { get; private set; }
         [field: SerializeField] public string[] VulnerableObjectsTags { get; private set; }
 
         [field: Header("References")]

@@ -151,10 +151,8 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         private void Shoot()
         {
-            // todo: remove ""
-            _projectileService.AddBullet(_model.BulletDirection, _model.Position,
-                new string[] { _model.PlayerTag, "Drop" },
-                _model.BulletTag);
+            _projectileService.AddBullet(_model.BulletDirection, _model.Position, _model.ProjectileIgnoreTags,
+                _model.ProjectileTag);
         }
 
         private void TryChangeTargetPosition(PointerEventData eventData)
