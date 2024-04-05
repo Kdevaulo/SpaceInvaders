@@ -50,6 +50,7 @@ namespace Kdevaulo.SpaceInvaders
             Container.Bind<ScreenUtilities>().AsSingle();
             Container.Bind<PositionsProvider>().FromInstance(_positionsProvider);
             Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScreenAspectHandler>().AsSingle();
 
             Container.Bind<PauseService>().AsSingle();
             Container.Bind<ScoreService>().AsSingle();

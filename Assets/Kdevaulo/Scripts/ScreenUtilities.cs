@@ -16,6 +16,16 @@ namespace Kdevaulo.SpaceInvaders
         [Inject]
         private CanvasScaler _canvasScaler;
 
+        public void UpdateCameraSize()
+        {
+            var referenceResolution = _canvasScaler.referenceResolution;
+
+            float referenceAR = CalculateAspectRatio(referenceResolution.x, referenceResolution.y);
+            float currentAR = CalculateAspectRatio(Screen.width, Screen.height);
+
+            _camera.orthographicSize = _camera.orthographicSize * referenceAR / currentAR;
+        }
+
         public Rect GetScreenRectInUnits()
         {
             float ppu = _canvasScaler.referencePixelsPerUnit;
@@ -49,6 +59,11 @@ namespace Kdevaulo.SpaceInvaders
                    || position.x + halfHorizontalSize > bounds.xMax
                    || position.y - halfVerticalSize < bounds.yMin
                    || position.y + halfVerticalSize > bounds.yMax;
+        }
+
+        private float CalculateAspectRatio(float width, float height)
+        {
+            return width / height;
         }
     }
 }
