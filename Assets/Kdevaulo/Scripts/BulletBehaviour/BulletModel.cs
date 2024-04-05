@@ -2,30 +2,12 @@
 
 namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 {
-    public sealed class BulletModel
+    public sealed class BulletModel : BaseModel<MovingItemView>
     {
-        public Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                View.SetPosition(_position);
-            }
-        }
-
-        public readonly MovingItemView View;
-
         public readonly Vector2 Direction;
 
-        private readonly float HalfHorizontalSize;
-        private readonly float HalfVerticalSize;
-
-        private Vector2 _position;
-
-        public BulletModel(MovingItemView view, Vector2 direction, Vector2 startPosition)
+        public BulletModel(MovingItemView view, Vector2 direction, Vector2 startPosition) : base(view)
         {
-            View = view;
             Direction = direction;
             Position = startPosition;
 

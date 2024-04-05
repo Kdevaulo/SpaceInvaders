@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486c4055304a4479b478bea0e42673d5, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  View: {fileID: 8251147767129796150, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
-  StartPosition: {x: 0, y: -6.5}
-  BulletDirection: {x: 0, y: 1}
-  BulletTag: PlayerBullet
-  VulnerableObjectsTags:
+  <ShootingDelay>k__BackingField: 0.75
+  <MovementSmoothness>k__BackingField: 0.2
+  <MovementDelay>k__BackingField: 0.01
+  <StartPosition>k__BackingField: {x: 0, y: -6.5}
+  <BulletDirection>k__BackingField: {x: 0, y: 1}
+  <BulletTag>k__BackingField: PlayerBullet
+  <VulnerableObjectsTags>k__BackingField:
   - Enemy
   - EnemyBullet
-  ShootingDelay: 0.75
-  MovementSmoothness: 0.35
-  MovementDelay: 0.01
+  <View>k__BackingField: {fileID: 8251147767129796150, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}

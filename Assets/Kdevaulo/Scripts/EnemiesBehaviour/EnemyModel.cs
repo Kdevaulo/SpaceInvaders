@@ -4,40 +4,21 @@ using UnityEngine;
 
 namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
-    public sealed class EnemyModel
+    public sealed class EnemyModel : BaseModel<MovingItemView>
     {
-        public Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                View.SetPosition(_position);
-            }
-        }
-
         public Vector2Int Index { get; set; }
 
-        public readonly MovingItemView View;
         public readonly Drop DropType;
-        public readonly Enemy Name;
 
         public readonly int RewardPoints;
 
-        public readonly string VulnerableProjectileTag;
+        public readonly string[] VulnerableObjectsTags;
 
-        private readonly float HalfHorizontalSize;
-        private readonly float HalfVerticalSize;
-
-        private Vector2 _position;
-
-        public EnemyModel(MovingItemView view, EnemySettings settings)
+        public EnemyModel(MovingItemView view, EnemySettings settings) : base(view)
         {
-            View = view;
             DropType = settings.DropType;
-            Name = settings.Name;
             RewardPoints = settings.RewardPoints;
-            VulnerableProjectileTag = settings.VulnerableProjectileTag;
+            VulnerableObjectsTags = settings.VulnerableObjectsTags;
 
             var bounds = view.Collider.bounds;
             HalfHorizontalSize = bounds.size.x / 2;

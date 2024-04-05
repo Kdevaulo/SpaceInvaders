@@ -14,6 +14,6 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         public int Count;
         public int RewardPoints;
 
-        public string VulnerableProjectileTag;
+        public string[] VulnerableObjectsTags;
     }
 }

@@ -19,9 +19,9 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         private IResourceHandler[] _resourceHandlers;
 
         [Inject]
-        private LevelSettings[] _levelSettings;
+        private LevelSettingsData[] _levelSettings;
         [Inject]
-        private PlayerSettings _playerSettings;
+        private PlayerSettingsData _playerSettings;
 
         [Inject]
         private EnemiesFactory _enemiesFactory;
@@ -88,7 +88,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
                 }
             }
 
-            var enemyArray = GetValue(enemies, currentSettings.ColumnsCount);
+            var enemyArray = GetValue(enemies, currentSettings.EnemiesColumnsCount);
 
             PlaceEnemies(enemies);
 
@@ -96,7 +96,8 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
             //todo: fix behaviour, remove peer-to-peer reference
             _enemiesController.Initialize(enemies, enemyArray, currentSettings.EnemiesMoveDelayBounds,
-                currentSettings.EnemyMovementPattern, currentSettings.VerticalStep, currentSettings.EnemyShootDelay,
+                currentSettings.EnemyMovementSpeedPattern, currentSettings.EnemyVerticalStep,
+                currentSettings.EnemyShootDelay,
                 currentSettings.EnemiesBulletDirection);
 
             //todo: fix behaviour, remove peer-to-peer reference
@@ -131,7 +132,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
             return models;
         }
 
-        private PlayerModel CreatePlayer(PlayerSettings settings)
+        private PlayerModel CreatePlayer(PlayerSettingsData settings)
         {
             var view = Object.Instantiate(settings.View);
             var model = new PlayerModel(view, settings);

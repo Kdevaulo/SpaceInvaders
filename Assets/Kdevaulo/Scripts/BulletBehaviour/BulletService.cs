@@ -24,7 +24,7 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
         private BulletPool _bulletPool;
 
         [Inject]
-        private BulletSettings _bulletSettings;
+        private BulletSettingsData _bulletSettingsData;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -57,7 +57,7 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         void IInitializable.Initialize()
         {
-            _moveDelay = _bulletSettings.ProjectileMoveDelay;
+            _moveDelay = _bulletSettingsData.ProjectileMoveDelay;
             _timeCounter = _moveDelay;
             _screenRect = _screenService.GetScreenRectInUnits();
         }

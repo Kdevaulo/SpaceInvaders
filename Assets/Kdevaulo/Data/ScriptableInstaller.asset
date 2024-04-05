@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScriptableInstaller
   m_EditorClassIdentifier: 
   _dropSettings: {fileID: 11400000, guid: e43d073ccf23b044a8b8b161494887bc, type: 2}
-  _bulletSettings: {fileID: 11400000, guid: 5b37955fc7da25644bbff81ed4c76cbe, type: 2}
+  _bulletSettingsData: {fileID: 11400000, guid: 5b37955fc7da25644bbff81ed4c76cbe, type: 2}
   _playerSettings: {fileID: 11400000, guid: a253c5e9534fe93478fd4d77f4ffdab2, type: 2}
   _levelSettings:
   - {fileID: 11400000, guid: 128357fe5385f4146ae57a107bb9aecb, type: 2}

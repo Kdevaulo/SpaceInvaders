@@ -13,18 +13,18 @@ namespace Kdevaulo.SpaceInvaders.Installers
         menuName = nameof(Installers) + "/" + nameof(ScriptableInstaller))]
     public sealed class ScriptableInstaller : ScriptableObjectInstaller
     {
-        [SerializeField] private DropSettings _dropSettings;
-        [SerializeField] private BulletSettings _bulletSettings;
-        [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private DropSettingsData _dropSettings;
+        [SerializeField] private BulletSettingsData _bulletSettingsData;
+        [SerializeField] private PlayerSettingsData _playerSettings;
 
-        [SerializeField] private LevelSettings[] _levelSettings;
+        [SerializeField] private LevelSettingsData[] _levelSettings;
 
         public override void InstallBindings()
         {
-            Container.Bind<DropSettings>().FromInstance(_dropSettings);
-            Container.Bind<BulletSettings>().FromInstance(_bulletSettings);
-            Container.Bind<PlayerSettings>().FromInstance(_playerSettings);
-            Container.Bind<LevelSettings[]>().FromInstance(_levelSettings);
+            Container.Bind<DropSettingsData>().FromInstance(_dropSettings);
+            Container.Bind<BulletSettingsData>().FromInstance(_bulletSettingsData);
+            Container.Bind<PlayerSettingsData>().FromInstance(_playerSettings);
+            Container.Bind<LevelSettingsData[]>().FromInstance(_levelSettings);
         }
     }
 }

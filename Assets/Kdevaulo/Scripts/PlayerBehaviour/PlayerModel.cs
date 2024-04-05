@@ -2,37 +2,21 @@
 
 namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 {
-    public sealed class PlayerModel
+    public sealed class PlayerModel : BaseModel<DraggableItemView>
     {
-        public Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                View.SetPosition(_position);
-            }
-        }
-
-        public readonly DraggableItemView View;
-
         public readonly string[] VulnerableObjectsTags;
+
         public readonly string PlayerTag;
         public readonly string BulletTag;
 
         public readonly float ShootingDelay;
         public readonly float MovementDelay;
-        public readonly float HalfVerticalSize;
         public readonly float MovementSmoothness;
-        public readonly float HalfHorizontalSize;
 
         public readonly Vector2 BulletDirection;
 
-        private Vector2 _position;
-
-        public PlayerModel(DraggableItemView view, PlayerSettings settings)
+        public PlayerModel(DraggableItemView view, PlayerSettingsData settings) : base(view)
         {
-            View = view;
             Position = settings.StartPosition;
             ShootingDelay = settings.ShootingDelay;
             MovementDelay = settings.MovementDelay;

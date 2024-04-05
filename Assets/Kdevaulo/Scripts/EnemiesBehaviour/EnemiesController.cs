@@ -86,7 +86,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 var view = enemy.View;
 
                 view.Collider.OnTriggerEnter2DAsObservable()
-                    .Where(x => x.CompareTag(enemy.VulnerableProjectileTag))
+                    .Where(x => x.IfAnyTag(enemy.VulnerableObjectsTags))
                     .Subscribe(_ => HandleKilledEvent(enemy))
                     .AddTo(_disposable);
             }
