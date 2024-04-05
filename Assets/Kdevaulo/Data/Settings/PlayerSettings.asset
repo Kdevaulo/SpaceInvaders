@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486c4055304a4479b478bea0e42673d5, type: 3}
+  m_Name: PlayerSettings
+  m_EditorClassIdentifier: 
+  View: {fileID: 8251147767129796150, guid: 0ba1fcd8bf5367c4cb3769ecb8322243, type: 3}
+  StartPosition: {x: 0, y: -6.5}
+  BulletDirection: {x: 0, y: 1}
+  BulletTag: PlayerBullet
+  VulnerableObjectsTags:
+  - Enemy
+  - EnemyBullet
+  ShootingDelay: 0.75
+  MovementSmoothness: 0.35
+  MovementDelay: 0.01

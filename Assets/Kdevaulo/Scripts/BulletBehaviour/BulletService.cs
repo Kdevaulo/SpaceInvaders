@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Kdevaulo.SpaceInvaders.LevelSystem;
+using Kdevaulo.SpaceInvaders.ScreenBehaviour;
 
 using UniRx;
 using UniRx.Triggers;
@@ -18,13 +18,13 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
         private const float MoveStepDivider = 10;
 
         [Inject]
+        private ScreenService _screenService;
+
+        [Inject]
         private BulletPool _bulletPool;
 
         [Inject]
-        private LevelSettings _levelSettings;
-
-        [Inject]
-        private ScreenUtilities _screenUtilities;
+        private BulletSettings _bulletSettings;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -57,9 +57,9 @@ namespace Kdevaulo.SpaceInvaders.BulletBehaviour
 
         void IInitializable.Initialize()
         {
-            _moveDelay = _levelSettings.ProjectileMoveDelay;
+            _moveDelay = _bulletSettings.ProjectileMoveDelay;
             _timeCounter = _moveDelay;
-            _screenRect = _screenUtilities.GetScreenRectInUnits();
+            _screenRect = _screenService.GetScreenRectInUnits();
         }
 
         void ITickable.Tick()

@@ -16,7 +16,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
         public readonly DraggableItemView View;
 
-        public readonly string VulnerableProjectileTag;
+        public readonly string[] VulnerableObjectsTags;
         public readonly string PlayerTag;
         public readonly string BulletTag;
 
@@ -38,7 +38,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             MovementDelay = settings.MovementDelay;
             BulletDirection = settings.BulletDirection;
             MovementSmoothness = settings.MovementSmoothness;
-            VulnerableProjectileTag = settings.VulnerableProjectileTag;
+            VulnerableObjectsTags = settings.VulnerableObjectsTags;
 
             HalfVerticalSize = View.VerticalSize / 2;
             HalfHorizontalSize = View.HorizontalSize / 2;

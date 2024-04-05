@@ -6,6 +6,7 @@ using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.DropBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
+using Kdevaulo.SpaceInvaders.ScreenBehaviour;
 
 using UniRx;
 using UniRx.Triggers;
@@ -24,9 +25,6 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private const float MoveStepDivider = 10;
 
         [Inject]
-        private ScreenUtilities _screenUtilities;
-
-        [Inject]
         private LevelingService _levelingService;
 
         [Inject]
@@ -34,6 +32,9 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         [Inject]
         private BulletService _bulletService;
+
+        [Inject]
+        private ScreenService _screenService;
 
         [Inject]
         private DropService _dropService;
@@ -78,7 +79,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             _moveTimeCounter = _currentMoveDelay;
 
             _maxEnemies = _enemies.Count;
-            _screenRect = _screenUtilities.GetScreenRectInUnits();
+            _screenRect = _screenService.GetScreenRectInUnits();
 
             foreach (var enemy in _enemies)
             {

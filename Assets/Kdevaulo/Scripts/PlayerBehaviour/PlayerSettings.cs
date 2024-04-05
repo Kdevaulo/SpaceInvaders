@@ -1,11 +1,10 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 {
-    [Serializable]
-    public sealed class PlayerSettings
+    [CreateAssetMenu(fileName = nameof(PlayerSettings),
+        menuName = nameof(PlayerBehaviour) + "/" + nameof(PlayerSettings))]
+    public sealed class PlayerSettings : ScriptableObject
     {
         public DraggableItemView View;
 
@@ -13,7 +12,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         public Vector2 BulletDirection;
 
         public string BulletTag;
-        public string VulnerableProjectileTag;
+        public string[] VulnerableObjectsTags;
 
         [Min(0.00001f)]
         public float ShootingDelay;

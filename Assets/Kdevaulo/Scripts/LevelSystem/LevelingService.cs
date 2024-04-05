@@ -20,6 +20,8 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
         [Inject]
         private LevelSettings[] _levelSettings;
+        [Inject]
+        private PlayerSettings _playerSettings;
 
         [Inject]
         private EnemiesFactory _enemiesFactory;
@@ -56,8 +58,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
         public void StartNewStage()
         {
             ClearLevel();
-            ++_currentLevel;
-            InitializeLevel(_currentLevel);
+            InitializeLevel(++_currentLevel);
         }
 
         public void ClearLevel()
@@ -91,7 +92,7 @@ namespace Kdevaulo.SpaceInvaders.LevelSystem
 
             PlaceEnemies(enemies);
 
-            var playerModel = CreatePlayer(currentSettings.PlayerSettings);
+            var playerModel = CreatePlayer(_playerSettings);
 
             //todo: fix behaviour, remove peer-to-peer reference
             _enemiesController.Initialize(enemies, enemyArray, currentSettings.EnemiesMoveDelayBounds,

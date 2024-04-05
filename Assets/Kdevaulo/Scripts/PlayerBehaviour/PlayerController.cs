@@ -3,6 +3,7 @@
 using Kdevaulo.SpaceInvaders.BulletBehaviour;
 using Kdevaulo.SpaceInvaders.LevelSystem;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
+using Kdevaulo.SpaceInvaders.ScreenBehaviour;
 
 using UniRx;
 using UniRx.Triggers;
@@ -25,10 +26,10 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         private LevelingService _levelingService;
 
         [Inject]
-        private ScoreService _scoreService;
+        private ScreenService _screenService;
 
         [Inject]
-        private ScreenUtilities _screenUtilities;
+        private ScoreService _scoreService;
 
         private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -54,10 +55,10 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
             _movingDelay = _model.MovementDelay;
             _shootingDelay = _model.ShootingDelay;
 
-            _screenRect = _screenUtilities.GetScreenRectInUnits();
+            _screenRect = _screenService.GetScreenRectInUnits();
 
             _model.View.Collider.OnTriggerEnter2DAsObservable()
-                .Where(x => x.CompareTag(_model.VulnerableProjectileTag))
+                .Where(x => x.IfAnyTag(_model.VulnerableObjectsTags))
                 .Subscribe(_ =>
                 {
                     _levelingService.Restart();
@@ -146,9 +147,9 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         {
             if (_canMove || !_isPaused)
             {
-                var eventDataPosition = _screenUtilities.ScreenToWorldPoint(eventData.position);
+                var eventDataPosition = _screenService.ScreenToWorldPoint(eventData.position);
 
-                bool isOutOfRect = _screenUtilities.IsOutOfRect(eventDataPosition, _model.HalfVerticalSize,
+                bool isOutOfRect = Utilities.IsOutOfRect(eventDataPosition, _model.HalfVerticalSize,
                     _model.HalfHorizontalSize, _screenRect);
 
                 if (isOutOfRect) return;

@@ -6,16 +6,15 @@ using Kdevaulo.SpaceInvaders.MenuBehaviour;
 using Kdevaulo.SpaceInvaders.PauseBehaviour;
 using Kdevaulo.SpaceInvaders.PlayerBehaviour;
 using Kdevaulo.SpaceInvaders.ScoreBehaviour;
+using Kdevaulo.SpaceInvaders.ScreenBehaviour;
 
 using UnityEngine;
 using UnityEngine.UI;
 
-using Zenject;
-
-namespace Kdevaulo.SpaceInvaders
+namespace Kdevaulo.SpaceInvaders.Installers
 {
-    [AddComponentMenu(nameof(MainInstaller) + " in " + nameof(SpaceInvaders))]
-    public sealed class MainInstaller : MonoInstaller
+    [AddComponentMenu(nameof(MonoInstaller) + " in " + nameof(Installers))]
+    public sealed class MonoInstaller : Zenject.MonoInstaller
     {
         [Header("References")]
         [SerializeField] private Camera _camera;
@@ -29,9 +28,6 @@ namespace Kdevaulo.SpaceInvaders
 
         [SerializeField] private PositionsProvider _positionsProvider;
 
-        [SerializeField] private DropSettings _dropSettings;
-        [SerializeField] private LevelSettings _levelSettings;
-
         public override void InstallBindings()
         {
             Container.Bind<Camera>().FromInstance(_camera);
@@ -43,20 +39,16 @@ namespace Kdevaulo.SpaceInvaders
             Container.Bind<MovingItemView>().FromInstance(_bulletView);
             Container.Bind<PauseMenuView>().FromInstance(_pauseMenuView);
 
-            Container.Bind<DropSettings>().FromInstance(_dropSettings);
-            Container.Bind<LevelSettings>().FromInstance(_levelSettings);
-
             Container.Bind<EnemiesFactory>().AsSingle();
-            Container.Bind<ScreenUtilities>().AsSingle();
             Container.Bind<PositionsProvider>().FromInstance(_positionsProvider);
             Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ScreenAspectHandler>().AsSingle();
 
             Container.Bind<PauseService>().AsSingle();
             Container.Bind<ScoreService>().AsSingle();
             Container.Bind<LevelingService>().AsSingle();
             Container.BindInterfacesAndSelfTo<DropService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BulletService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScreenService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();
