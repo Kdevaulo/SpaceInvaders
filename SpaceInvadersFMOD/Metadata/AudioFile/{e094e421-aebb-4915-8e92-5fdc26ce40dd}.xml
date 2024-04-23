@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e094e421-aebb-4915-8e92-5fdc26ce40dd}">
+		<property name="assetPath">
+			<value>Music/MandalorianBackgroundMusic.ogg</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>198.11265306122448</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9d790748-ebee-4ab5-bd4c-91b222cefc3d}</destination>
+		</relationship>
+	</object>
+</objects>
