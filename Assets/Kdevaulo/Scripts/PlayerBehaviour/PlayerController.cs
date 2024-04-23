@@ -19,6 +19,11 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 {
     public sealed class PlayerController : IInitializable, IPauseHandler, IDisposable, ITickable, IResourceHandler
     {
+        bool IPauseHandler.IsPaused
+        {
+            set => _isPaused = value;
+        }
+
         [Inject] private ScoreService _scoreService;
         [Inject] private ScreenService _screenService;
         [Inject] private LevelingService _levelingService;
@@ -59,16 +64,6 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
 
             TryMove();
             TryShoot();
-        }
-
-        void IPauseHandler.HandlePause()
-        {
-            _isPaused = true;
-        }
-
-        void IPauseHandler.HandleResume()
-        {
-            _isPaused = false;
         }
 
         void IDisposable.Dispose()

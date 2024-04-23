@@ -12,6 +12,7 @@ namespace Kdevaulo.SpaceInvaders.LevelngSystem
         [field: SerializeField] public float EnemyVerticalStep { get; private set; }
         [field: Min(0.00001f)]
         [field: SerializeField] public float EnemyShootDelay { get; private set; }
+        [field: SerializeField] public float EnemyMoveStepDivider { get; private set; }
 
         [field: SerializeField] public int EnemiesColumnsCount { get; private set; }
 

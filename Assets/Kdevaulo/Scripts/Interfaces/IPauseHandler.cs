@@ -2,7 +2,6 @@
 {
     public interface IPauseHandler
     {
-        void HandlePause();
-        void HandleResume();
+        bool IsPaused { set; }
     }
 }

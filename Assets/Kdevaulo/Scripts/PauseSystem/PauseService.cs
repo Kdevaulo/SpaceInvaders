@@ -14,7 +14,7 @@ namespace Kdevaulo.SpaceInvaders.PauseSystem
         {
             foreach (var handler in _pauseHandlers)
             {
-                handler.HandlePause();
+                handler.IsPaused = true;
             }
 
             _pauseMenuView.SetActive(true);
@@ -24,7 +24,7 @@ namespace Kdevaulo.SpaceInvaders.PauseSystem
         {
             foreach (var handler in _pauseHandlers)
             {
-                handler.HandleResume();
+                handler.IsPaused = false;
             }
 
             _pauseMenuView.SetActive(false);

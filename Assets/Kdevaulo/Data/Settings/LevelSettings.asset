@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnemyVerticalStep>k__BackingField: -1
   <EnemyShootDelay>k__BackingField: 1.5
+  <EnemyMoveStepDivider>k__BackingField: 10
   <EnemiesColumnsCount>k__BackingField: 7
   <EnemyProjectileTag>k__BackingField: EnemyBullet
   <EnemiesBulletDirection>k__BackingField: {x: 0, y: -1}

@@ -14,6 +14,11 @@ namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 {
     public sealed class ProjectileService : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
+        bool IPauseHandler.IsPaused
+        {
+            set => _isPaused = value;
+        }
+
         [Inject] private ScreenService _screenService;
 
         [Inject] private ProjectilePool _projectilePool;
@@ -84,16 +89,6 @@ namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 
                 _timeCounter = _moveDelay;
             }
-        }
-
-        void IPauseHandler.HandlePause()
-        {
-            _isPaused = true;
-        }
-
-        void IPauseHandler.HandleResume()
-        {
-            _isPaused = false;
         }
 
         void IDisposable.Dispose()

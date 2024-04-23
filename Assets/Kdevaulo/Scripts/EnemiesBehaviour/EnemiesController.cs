@@ -23,7 +23,10 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 {
     public sealed class EnemiesController : IInitializable, ITickable, IPauseHandler, IDisposable, IResourceHandler
     {
-        private const float MoveStepDivider = 10;
+        bool IPauseHandler.IsPaused
+        {
+            set => _isPaused = value;
+        }
 
         [Inject] private DropService _dropService;
         [Inject] private ScoreService _scoreService;
@@ -53,6 +56,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private float _shootDelay;
         private float _verticalStep;
         private float _moveTimeCounter;
+        private float _moveStepDivider;
         private float _shootTimeCounter;
         private float _currentMoveDelay;
 
@@ -90,16 +94,6 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
                 Shoot();
                 _shootTimeCounter = _shootDelay;
             }
-        }
-
-        void IPauseHandler.HandlePause()
-        {
-            _isPaused = true;
-        }
-
-        void IPauseHandler.HandleResume()
-        {
-            _isPaused = false;
         }
 
         void IResourceHandler.Release()
@@ -142,6 +136,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
             _shootDelay = levelSettings.EnemyShootDelay;
             _verticalStep = levelSettings.EnemyVerticalStep;
+            _moveStepDivider = levelSettings.EnemyMoveStepDivider;
             _bulletDirection = levelSettings.EnemiesBulletDirection;
             _moveDelayBounds = levelSettings.EnemiesMoveDelayBounds;
             _speedFunction = levelSettings.EnemyMovementSpeedPattern;
@@ -217,7 +212,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         {
             var offset = _isLeftDirection ? Vector2.left : Vector2.right;
 
-            DoWithEach(enemy => enemy.Position += offset / MoveStepDivider);
+            DoWithEach(enemy => enemy.Position += offset / _moveStepDivider);
         }
 
         private void HandleScreenCollisions()
