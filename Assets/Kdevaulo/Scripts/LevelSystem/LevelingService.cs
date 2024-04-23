@@ -1,4 +1,7 @@
-﻿using UnityEngine.Assertions;
+﻿using Kdevaulo.SpaceInvaders.Audio;
+
+using UnityEngine;
+using UnityEngine.Assertions;
 
 using Zenject;
 
@@ -16,6 +19,7 @@ namespace Kdevaulo.SpaceInvaders.LevelngSystem
         {
             ClearLevel();
             InitializeLevel(_currentLevel);
+            AudioService.PlayOneShot(AudioContainer.Instance.EnemySpawn, Vector3.zero);
         }
 
         public void StartFromTheBeginning()

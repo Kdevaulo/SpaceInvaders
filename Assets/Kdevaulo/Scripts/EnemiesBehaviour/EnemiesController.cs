@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Kdevaulo.SpaceInvaders.Audio;
 using Kdevaulo.SpaceInvaders.DropBehaviour;
 using Kdevaulo.SpaceInvaders.LevelngSystem;
 using Kdevaulo.SpaceInvaders.ProjectileBehaviour;
@@ -45,6 +46,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
         private CompositeDisposable _eventsDisposable = new CompositeDisposable();
         private CompositeDisposable _collisionDisposable = new CompositeDisposable();
 
+        private AudioContainer _audioContainer;
         private LevelSettingsData _levelSettings;
 
         private bool _isPaused;
@@ -69,6 +71,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
 
         void IInitializable.Initialize()
         {
+            _audioContainer = AudioContainer.Instance;
             _levelingModel.LevelSettings.Where(x => x != null).Subscribe(_ => Prepare()).AddTo(_eventsDisposable);
         }
 
@@ -223,6 +226,7 @@ namespace Kdevaulo.SpaceInvaders.EnemiesBehaviour
             if (switchDirection)
             {
                 MoveVertical();
+                AudioService.PlayOneShot(_audioContainer.EnemyMoveDown, Vector3.zero);
                 _isLeftDirection = !_isLeftDirection;
             }
 

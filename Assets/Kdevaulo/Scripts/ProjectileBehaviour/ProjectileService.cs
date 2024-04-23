@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Kdevaulo.SpaceInvaders.Audio;
 using Kdevaulo.SpaceInvaders.ScreenSystem;
 
 using UniRx;
@@ -25,6 +26,7 @@ namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 
         [Inject] private ProjectileSettingsData _bulletSettingsData;
 
+        private AudioContainer _audioContainer;
         private CompositeDisposable _disposable = new CompositeDisposable();
 
         private List<ProjectileModel> _activeBullets = new List<ProjectileModel>();
@@ -55,10 +57,13 @@ namespace Kdevaulo.SpaceInvaders.ProjectileBehaviour
 
             _activeBullets.Add(model);
             _disposableByModel.Add(model, disposable);
+
+            AudioService.PlayOneShot(_audioContainer.Shoot, startPosition);
         }
 
         void IInitializable.Initialize()
         {
+            _audioContainer = AudioContainer.Instance;
             _moveDelay = _bulletSettingsData.MoveDelay;
             _screenRect = _screenService.GetScreenRectInUnits();
             _moveStepDivider = _bulletSettingsData.MoveStepDivider;

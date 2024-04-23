@@ -28,7 +28,7 @@ namespace Kdevaulo.SpaceInvaders.PlayerBehaviour
         [Inject] private ScreenService _screenService;
         [Inject] private LevelingService _levelingService;
         [Inject] private ProjectileService _projectileService;
-
+ 
         [Inject] private LevelingModel _levelingModel;
 
         [Inject] private PlayerSettingsData _playerSettings;
