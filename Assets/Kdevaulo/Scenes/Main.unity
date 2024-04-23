@@ -1756,11 +1756,11 @@ MonoBehaviour:
   _camera: {fileID: 963194227}
   _safeZone: {fileID: 2099540892}
   _canvasScaler: {fileID: 1931037986}
+  _bulletView: {fileID: 5833327632413797167, guid: 4dc4483da0f182b4a95658ec453b3e1a, type: 3}
+  _positionsProvider: {fileID: 1033711605}
   _scoreView: {fileID: 450324139}
   _pauseView: {fileID: 450324140}
-  _bulletView: {fileID: 5833327632413797167, guid: 4dc4483da0f182b4a95658ec453b3e1a, type: 3}
   _pauseMenuView: {fileID: 1930654427}
-  _positionsProvider: {fileID: 1033711605}
 --- !u!1 &1162835034
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,14 +3617,14 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 6daa5e3ce0d2c1e478154620ea99c4ef, type: 3}
   m_Type: 2
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.75
 --- !u!222 &2099540894
 CanvasRenderer:
   m_ObjectHideFlags: 0
