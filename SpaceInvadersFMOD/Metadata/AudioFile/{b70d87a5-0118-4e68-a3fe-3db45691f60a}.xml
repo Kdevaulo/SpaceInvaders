@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{3f3de304-0d6b-4fcc-9ac1-66b6ab3f58f0}">
+	<object class="AudioFile" id="{b70d87a5-0118-4e68-a3fe-3db45691f60a}">
 		<property name="assetPath">
-			<value>Music/StarWarsBackgroundMusic.ogg</value>
+			<value>SFX/EnemySpawn.ogg</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
@@ -14,10 +14,10 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>166.90503401360544</value>
+			<value>17.068276643990931</value>
 		</property>
 		<relationship name="masterAssetFolder">
-			<destination>{9d790748-ebee-4ab5-bd4c-91b222cefc3d}</destination>
+			<destination>{b893eb84-e3f2-4216-82bc-ec71a9037467}</destination>
 		</relationship>
 	</object>
 </objects>

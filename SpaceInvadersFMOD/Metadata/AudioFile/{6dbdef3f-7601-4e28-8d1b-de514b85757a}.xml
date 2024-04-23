@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{e094e421-aebb-4915-8e92-5fdc26ce40dd}">
+	<object class="AudioFile" id="{6dbdef3f-7601-4e28-8d1b-de514b85757a}">
 		<property name="assetPath">
-			<value>Music/MandalorianBackgroundMusic.ogg</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
+			<value>SFX/EnemyMoveDown.ogg</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
@@ -14,10 +11,10 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>198.11265306122448</value>
+			<value>0.24689342403628117</value>
 		</property>
 		<relationship name="masterAssetFolder">
-			<destination>{9d790748-ebee-4ab5-bd4c-91b222cefc3d}</destination>
+			<destination>{b893eb84-e3f2-4216-82bc-ec71a9037467}</destination>
 		</relationship>
 	</object>
 </objects>
